@@ -1,16 +1,30 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/migrate-shadow
-}
-
+// PLANET SCALE START
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["referentialIntegrity"]
 }
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+//PLANET SCALE END
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+//   // shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/migrate-shadow
+// }
+
+// generator client {
+//   provider        = "prisma-client-js"
+//   previewFeatures = ["fullTextSearch", "fullTextIndex"]
+// }
 
 model Account {
   id                String   @id @default(cuid())
@@ -61,8 +75,10 @@ model User {
   short_bio         String?
   education         String?
   work              String?
-  skills            String[]
-  hobbies           String[]
+  //skills          String[]
+  skills            UserSkill[]
+  // hobbies         Hobbies[]
+  hobbies           Hobbie[]
   // Foreign keys
   accounts          Account[]
   sessions          Session[]
@@ -91,11 +107,14 @@ model Project {
   updatedAt          DateTime          @updatedAt
   userId             String
   title              String
-  tags               String[]
+  // tags               String[]
+  tags               Tag[]
   description        String
   difficulty_level   String
-  skills             String[]
-  technology_stack   String[]
+  // skills             String[]
+  skills             ProjectSkill[]
+  // technology_stack   String[]
+  technology_stack   TechnologyStack[]
   development_status String
   team_need          Int?
   // Foreign keys
@@ -126,3 +145,48 @@ model Communication {
   // Foreign keys
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
+
+//creating new models because PlanetScale does not support primitive datatype as arrays (or lists)
+
+model UserSkill {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String // relation scalar field (used in the `@relation` attribute above)
+  skill  Skill  @relation(fields: [skillId], references: [id])
+  skillId String
+  @@id([userId, skillId])
+}
+
+model Skill {
+  id      String       @id @default(cuid())
+  name    String       // The skill name
+  userSkills UserSkill[]
+  projectSkills ProjectSkill[]
+}
+
+model ProjectSkill {
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String
+  skill     Skill   @relation(fields: [skillId], references: [id])
+  skillId   String
+  @@id([projectId, skillId])
+}
+
+model Hobbie {
+  id          String @id @default(cuid())
+  name String
+  users       User[]
+}
+
+model Tag {
+  id       String    @id @default(cuid())
+  name String
+  project  Project[]
+}
+
+model TechnologyStack {
+  id       String    @id @default(cuid())
+  name String
+  project  Project[]
+}
+
+
