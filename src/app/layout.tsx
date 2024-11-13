@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "../components/theme-provider"
+import { ThemeProvider } from "../components/theme-provider";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "../components/app-sidebar";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -26,18 +28,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <SidebarProvider>
+        <AppSidebar />
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
+            <SidebarTrigger />
+
             {children}
           </ThemeProvider>
-      </body>
+        </body>
+      </SidebarProvider>
     </html>
   );
 }
