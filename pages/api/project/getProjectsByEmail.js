@@ -1,35 +1,15 @@
-import { getSession } from 'next-auth/react';
-import prisma from '../../../utils/prisma';
+import { getBetterAuthSession } from '../../../lib/better-auth-server';
+import { getProjectsByUserEmail } from '../../../utils/supabase-db';
 
 export default async function main(req, res) {
   try {
-    const session = await getSession({ req });
-
-    const projects = await prisma.user.findMany({
-      // Returns all projects with that specific email address
-      where: {
-        email: session?.user?.email,
-      },
-      // Select table
-      select: {
-        // Table Name
-        project: {
-          include: {
-            // Doing a Join
-            developmentTool: true,
-            communication: true,
-            user: true,
-          },
-        },
-      },
-    });
-
-    const data = await projects[0].project;
-    return await res.json(data);
+    const session = await getBetterAuthSession(req, { syncAppUser: true });
+    const projects = await getProjectsByUserEmail(session?.user?.email);
+    return res.status(200).json(projects);
   } catch (err) {
     console.error('Issue with getProjectsByEmails: ', err);
-    return res.status(err.code);
+    return res.status(500).json({ error: 'Unable to load your dashboard projects at this time.' });
   }
 
-  return await res.json({ message: 'Error inside getProjectsByEmails' });
+  return res.status(500).json({ message: 'Error inside getProjectsByEmails' });
 }

@@ -1,66 +1,70 @@
-import { getSession } from 'next-auth/react';
-import prisma from '../../../utils/prisma';
+import { getBetterAuthSession } from '../../../lib/better-auth-server';
+import { createProjectForUser } from '../../../utils/supabase-db';
 
 export default async function main(req, res) {
   const {
     title,
+    venture_name,
     tags,
+    sectors,
     description,
+    concept_summary,
     skills,
+    cofounder_traits,
     technology_stack,
+    helpful_backgrounds,
     development_status,
+    venture_stage,
     difficulty_level,
+    commitment_level,
     teamNeed,
+    cofoundersWanted,
     discord,
+    preferred_contact,
     twitch,
+    intro_call_link,
     twitter,
+    social_profile,
     slack,
+    team_space_link,
     github,
+    proof_of_work_url,
     jira,
+    research_url,
     figma,
+    prototype_url,
     trello,
+    traction_url,
     notion,
+    memo_url,
   } = req.body;
 
-  const session = await getSession({ req });
+  const session = await getBetterAuthSession(req, { syncAppUser: true });
 
-  // Parse Json into an Integer
-  const teamMemberNumber = parseInt(teamNeed, 10);
+  try {
+    const result = await createProjectForUser(session?.user?.email, {
+      title: venture_name || title,
+      tags: sectors || tags,
+      description: concept_summary || description,
+      skills: cofounder_traits || skills,
+      technology_stack: helpful_backgrounds || technology_stack,
+      development_status: venture_stage || development_status,
+      difficulty_level: commitment_level || difficulty_level,
+      team_need: parseInt(cofoundersWanted || teamNeed, 10),
+      discord: preferred_contact || discord,
+      twitch: intro_call_link || twitch,
+      twitter: social_profile || twitter,
+      slack: team_space_link || slack,
+      github: proof_of_work_url || github,
+      jira: research_url || jira,
+      figma: prototype_url || figma,
+      trello: traction_url || trello,
+      notion: memo_url || notion,
+    });
 
-  const result = await prisma.project.create({
-    data: {
-      title: title,
-      description: description,
-      tags: tags,
-      skills: skills,
-      difficulty_level: difficulty_level,
-      technology_stack: technology_stack,
-      development_status: development_status,
-      team_need: teamMemberNumber,
-      user: {
-        connect: {
-          email: session?.user?.email,
-        },
-      },
-      developmentTool: {
-        create: {
-          github: github || undefined,
-          jira: jira || undefined,
-          figma: figma || undefined,
-          trello: trello || undefined,
-          notion: notion || undefined,
-        },
-      },
-      communication: {
-        create: {
-          discord: discord || undefined,
-          twitch: twitch || undefined,
-          twitter: twitter || undefined,
-          slack: slack || undefined,
-        },
-      },
-    },
-  });
-
-  return await res.json(result);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error('Issue with createProject: ', err);
+    return res.status(500).json({ error: err.message });
+  }
 }

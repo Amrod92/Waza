@@ -1,4 +1,4 @@
-import UAParser from 'ua-parser-js';
+import { UAParser } from 'ua-parser-js';
 
 export function isMobileDevice(req) {
   if (typeof navigator !== 'undefined') {

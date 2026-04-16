@@ -1,143 +1,138 @@
 import Link from 'next/link';
-import { AiFillTwitterCircle } from 'react-icons/ai';
-import { SiGithubsponsors } from 'react-icons/si';
-import { FaDiscord } from 'react-icons/fa';
+import {
+  ArrowRight,
+  Check,
+  MessageCircleHeart,
+  Search,
+  Sparkles,
+  UserPlus,
+} from 'lucide-react';
+import { SiGithub } from 'react-icons/si';
+
+import { Button } from '../UI/button';
+
+const signals = [
+  'For technical and non-technical co-founders',
+  'Clear startup briefs instead of vague profiles',
+  'Built for serious early-stage partnership discovery',
+];
+
+const quickActions = [
+  {
+    label: 'Browse active projects',
+    description: 'See startup listings by stage, market, and co-founder fit.',
+    href: '/projects',
+    icon: Search,
+  },
+  {
+    label: 'Publish your startup brief',
+    description: 'Show what you are building and who should join you.',
+    href: '/projects/create-project',
+    icon: UserPlus,
+  },
+];
 
 function Newsletter() {
   return (
-    <section>
-      <div className='max-w-6xl mx-auto px-4 sm:px-6'>
-        <div className='pb-12 md:pb-20'>
-          {/* CTA box */}
-          <div
-            className='relative bg-gray-900 rounded py-10 px-8 md:py-16 md:px-12 shadow-2xl overflow-hidden'
-            data-aos='zoom-y-out'
-          >
-            {/* Background illustration */}
-            <div
-              className='absolute right-0 bottom-0 pointer-events-none hidden lg:block'
-              aria-hidden='true'
-            >
-              <svg width='428' height='328' xmlns='http://www.w3.org/2000/svg'>
-                <defs>
-                  <radialGradient
-                    cx='35.542%'
-                    cy='34.553%'
-                    fx='35.542%'
-                    fy='34.553%'
-                    r='96.031%'
-                    id='ni-a'
-                  >
-                    <stop stopColor='#DFDFDF' offset='0%' />
-                    <stop stopColor='#4C4C4C' offset='44.317%' />
-                    <stop stopColor='#333' offset='100%' />
-                  </radialGradient>
-                </defs>
-                <g fill='none' fillRule='evenodd'>
-                  <g fill='#FFF'>
-                    <ellipse
-                      fillOpacity='.04'
-                      cx='185'
-                      cy='15.576'
-                      rx='16'
-                      ry='15.576'
-                    />
-                    <ellipse
-                      fillOpacity='.24'
-                      cx='100'
-                      cy='68.402'
-                      rx='24'
-                      ry='23.364'
-                    />
-                    <ellipse
-                      fillOpacity='.12'
-                      cx='29'
-                      cy='251.231'
-                      rx='29'
-                      ry='28.231'
-                    />
-                    <ellipse
-                      fillOpacity='.64'
-                      cx='29'
-                      cy='251.231'
-                      rx='8'
-                      ry='7.788'
-                    />
-                    <ellipse
-                      fillOpacity='.12'
-                      cx='342'
-                      cy='31.303'
-                      rx='8'
-                      ry='7.788'
-                    />
-                    <ellipse
-                      fillOpacity='.48'
-                      cx='62'
-                      cy='126.811'
-                      rx='2'
-                      ry='1.947'
-                    />
-                    <ellipse
-                      fillOpacity='.12'
-                      cx='78'
-                      cy='7.072'
-                      rx='2'
-                      ry='1.947'
-                    />
-                    <ellipse
-                      fillOpacity='.64'
-                      cx='185'
-                      cy='15.576'
-                      rx='6'
-                      ry='5.841'
-                    />
-                  </g>
-                  <circle fill='url(#ni-a)' cx='276' cy='237' r='200' />
-                </g>
-              </svg>
+    <section className='container mx-auto px-4 py-32'>
+      <div className='relative overflow-hidden rounded-[56px] border border-border bg-zinc-950 px-6 py-8 text-primary-foreground shadow-3xl md:px-10 md:py-10 lg:px-14'>
+        <div className='absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_22%)] pointer-events-none' />
+        <div className='absolute inset-0 bg-grid-zinc opacity-20 [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_100%)] pointer-events-none' />
+        <div className='absolute -right-20 top-10 h-56 w-56 rounded-full bg-white/10 blur-3xl pointer-events-none' />
+
+        <div className='relative z-10 grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.9fr)] lg:items-stretch'>
+          <div className='space-y-8 rounded-[40px] border border-white/10 bg-white/5 p-8 backdrop-blur-sm md:p-10'>
+            <div className='inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-sm font-bold uppercase tracking-[0.18em]'>
+              <Sparkles className='h-4 w-4' />
+              Final Step
+            </div>
+            <div className='max-w-2xl space-y-5'>
+              <h2 className='!text-white text-4xl font-black leading-[0.95] tracking-tight [text-shadow:0_2px_18px_rgba(0,0,0,0.35)] md:text-6xl lg:text-7xl'>
+                Stop searching blindly.
+                <br />
+                Start finding the right co-founder.
+              </h2>
+              <p className='max-w-xl text-lg font-medium leading-relaxed text-white/75 md:text-xl'>
+                Waza helps you publish a clearer startup brief, discover the
+                right project or co-founder, and move toward the first real
+                founder conversation.
+              </p>
             </div>
 
-            <div className='relative flex flex-col lg:flex-row justify-between items-center'>
-              {/* CTA content */}
-              <div className='text-center lg:text-left lg:max-w-xl'>
-                <h3 className='h3 text-white mb-2'>Join the Movement</h3>
-                <p className='text-gray-300 text-lg mb-6'>
-                  Join the global community of developers on Discord, and become
-                  a Sponsor.
-                </p>
-
-                {/* CTA form */}
-                <form className='w-full lg:w-auto'>
-                  <div className='flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:mx-0'>
-                    {/* <button className='w-55 h-12 px-5 mt-5 text-white text-center inline-flex items-center bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg py-2.5 mr-2 mb-2'>
-                      <AiFillTwitterCircle className='mr-2 -ml-1 w-6 h-5' />
-                      Follow @Waza
-                    </button> */}
-                    <a
-                      className='w-55 h-12 px-5 mt-5 text-white text-center inline-flex items-center bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 rounded-lg py-2.5 mr-2 mb-2'
-                      href='https://github.com/sponsors/Amrod92'
-                      target='_blank'
-                    >
-                      <SiGithubsponsors className='mr-2 -ml-1 w-6 h-5' />
-                      Become a Sponsor!
-                    </a>
-                    <Link href='https://discord.gg/WqAjnrqJJ5'>
-                      <a
-                        className='w-55 h-12 px-5 mt-5 text-white text-center inline-flex items-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 rounded-lg py-2.5 mr-2 mb-2'
-                        target='_blank'
-                      >
-                        <FaDiscord className='mr-2 -ml-1 w-6 h-5' />
-                        Join us on Discord
-                      </a>
-                    </Link>
+            <div className='grid gap-3 pt-2 sm:grid-cols-3'>
+              {signals.map(signal => (
+                <div
+                  key={signal}
+                  className='flex items-start gap-3 rounded-2xl border border-white/10 bg-black/20 p-4'
+                >
+                  <div className='mt-0.5 rounded-full bg-white/10 p-1.5'>
+                    <Check className='h-3.5 w-3.5' />
                   </div>
-                  {/* Success message */}
-                  {/* <p className="text-sm text-gray-400 mt-3">Thanks for subscribing!</p> */}
-                  {/* <p className='text-sm text-gray-400 mt-3'>
-                    7 days free trial. No credit card required.
-                  </p> */}
-                </form>
-              </div>
+                  <p className='text-sm font-medium leading-relaxed text-white/80'>
+                    {signal}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className='flex h-full flex-col gap-4'>
+            {quickActions.map(action => {
+              const Icon = action.icon;
+
+              return (
+                <Link key={action.label} href={action.href} className='group'>
+                  <div className='flex h-full items-center justify-between gap-5 rounded-[32px] border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-white/25 hover:bg-white/10 hover:translate-y-[-2px] md:p-7'>
+                    <div className='flex items-start gap-4'>
+                      <div className='rounded-2xl bg-white text-zinc-950 p-3 shadow-lg'>
+                        <Icon className='h-5 w-5' />
+                      </div>
+                      <div className='space-y-2'>
+                        <h3 className='text-xl font-black tracking-tight text-white'>
+                          {action.label}
+                        </h3>
+                        <p className='max-w-sm text-sm leading-relaxed text-white/70'>
+                          {action.description}
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight className='h-5 w-5 shrink-0 text-white/60 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white' />
+                  </div>
+                </Link>
+              );
+            })}
+
+            <div className='grid gap-4 rounded-[32px] border border-white/10 bg-white/5 p-6 md:grid-cols-2 md:p-7'>
+              <a
+                href='https://discord.gg/WqAjnrqJJ5'
+                target='_blank'
+                rel='noreferrer'
+              >
+                <Button
+                  variant='outline'
+                  className='h-14 w-full rounded-2xl border-white/15 bg-white/10 text-base font-bold text-white hover:bg-white/20'
+                >
+                  <MessageCircleHeart className='h-5 w-5' />
+                  Join Discord
+                </Button>
+              </a>
+              <a
+                href='https://github.com/sponsors/Amrod92'
+                target='_blank'
+                rel='noreferrer'
+              >
+                <Button
+                  variant='outline'
+                  className='h-14 w-full rounded-2xl border-white/15 bg-transparent text-base font-bold text-white hover:bg-white/10'
+                >
+                  <SiGithub className='h-5 w-5' />
+                  Sponsor Waza
+                </Button>
+              </a>
+              <p className='md:col-span-2 text-sm leading-relaxed text-white/60'>
+                Prefer to look first? Explore current startup briefs, then
+                publish your own when the fit feels real.
+              </p>
             </div>
           </div>
         </div>

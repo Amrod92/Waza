@@ -1,156 +1,68 @@
+'use client';
+
 import Link from 'next/link';
-import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
-import { Fragment } from 'react';
-import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { PlusSquare } from 'lucide-react';
+
+import { betterAuthClient } from '../../lib/better-auth-client';
+import { Avatar, AvatarFallback, AvatarImage } from '../UI/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../UI/dropdown-menu';
 
 const NavbarUserLogged = ({ session }) => {
+  const router = useRouter();
+
   return (
-    <div>
-      {session.user?.image ? (
-        <Menu as='div' className='relative inline-block text-left'>
-          <div>
-            <Menu.Button className='inline-flex w-full justify-center bg-opacity-20 text-sm font-medium text-white hover:bg-opacity-100 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black'>
-              {session.user?.image ? (
-                <Image
-                  width={50}
-                  height={50}
-                  className='rounded-full cursor-pointer'
-                  src={session.user?.image}
-                  alt='Profile Photo'
-                />
-              ) : (
-                <div class='flex items-center mt-4 space-x-3'>
-                  <svg
-                    class='text-gray-200 w-14 h-14 dark:text-gray-700'
-                    aria-hidden='true'
-                    fill='currentColor'
-                    viewBox='0 0 20 20'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path
-                      fill-rule='evenodd'
-                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z'
-                      clip-rule='evenodd'
-                    ></path>
-                  </svg>
-                </div>
-              )}
-            </Menu.Button>
-          </div>
-
-          <Transition
-            as={Fragment}
-            enter='transition ease-out duration-100'
-            enterFrom='transform opacity-0 scale-95'
-            enterTo='transform opacity-100 scale-100'
-            leave='transition ease-in duration-75'
-            leaveFrom='transform opacity-100 scale-100'
-            leaveTo='transform opacity-0 scale-95'
-          >
-            <Menu.Items className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-              <div className='p-3'>
-                <span className='block text-sm'>{session.user?.name}</span>
-                <span className='block truncate text-sm font-bold'>
-                  {session.user?.email}
-                </span>
-              </div>
-              <div className='px-1 py-1 '>
-                <Menu.Item>
-                  {({ active }) => (
-                    <div className='hidden md:block lg:block'>
-                      <Link href={`/projects/create-project`}>
-                        <button
-                          className={`${
-                            active
-                              ? 'bg-purple-400 text-white'
-                              : 'text-gray-900'
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          Create Project
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-                </Menu.Item>
-              </div>
-              <div className='px-1 py-1 '>
-                <Menu.Item>
-                  {({ active }) => (
-                    <div>
-                      <Link href={`/dashboard`}>
-                        <button
-                          className={`${
-                            active
-                              ? 'bg-orange-400 text-white'
-                              : 'text-gray-900'
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          Dashboard
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-                </Menu.Item>
-              </div>
-              <div className='px-1 py-1 '>
-                <Menu.Item>
-                  {({ active }) => (
-                    <div>
-                      <Link href={`/settings`}>
-                        <button
-                          className={`${
-                            active
-                              ? 'bg-orange-400 text-white'
-                              : 'text-gray-900'
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          Settings
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-                </Menu.Item>
-              </div>
-
-              <div className='px-1 py-1'>
-                <Menu.Item>
-                  {({ active }) => (
-                    <div>
-                      <Link href={`/settings`}>
-                        <button
-                          onClick={() => signOut({ callbackUrl: '/' })}
-                          className={`${
-                            active ? 'bg-red-500 text-white' : 'text-red-900'
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          Logout
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-                </Menu.Item>
-              </div>
-            </Menu.Items>
-          </Transition>
-        </Menu>
-      ) : (
-        <div className='overflow-hidden relative w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600'>
-          <svg
-            className='absolute -left-1 w-12 h-12 text-gray-400'
-            fill='currentColor'
-            viewBox='0 0 20 20'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
-              fillRule='evenodd'
-              d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z'
-              clipRule='evenodd'
-            ></path>
-          </svg>
-        </div>
-      )}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className='rounded-full focus:outline-none focus:ring-2 focus:ring-[#b44d24] focus:ring-offset-2'>
+          <Avatar className='h-12 w-12 border border-[#d9cdbf] shadow-sm'>
+            <AvatarImage src={session.user?.image} alt='Profile Photo' />
+            <AvatarFallback>
+              {session.user?.name?.slice(0, 1) || 'U'}
+            </AvatarFallback>
+          </Avatar>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align='end' className='w-56 rounded-2xl border-[#eadfce] bg-[#fffaf2]'>
+        <DropdownMenuLabel className='flex flex-col'>
+          <span className='text-sm font-medium'>{session.user?.name}</span>
+          <span className='truncate text-xs text-zinc-500'>
+            {session.user?.email}
+          </span>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild className='hidden md:flex'>
+          <Link href='/projects/create-project'>
+            <PlusSquare className='mr-2 h-4 w-4' />
+            Post Idea
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href='/dashboard'>Workspace</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href='/settings'>Profile settings</Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className='text-red-700 focus:bg-red-50 focus:text-red-800'
+          onClick={async () => {
+            await betterAuthClient.signOut();
+            router.push('/');
+            router.refresh();
+          }}
+        >
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

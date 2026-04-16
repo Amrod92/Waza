@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 
 function TagsInput({ tags, setTags, setTagsValid, dataTags }) {
   useEffect(() => {
-    if (dataTags) {
-      return setTagsValid([...tags, ...dataTags]);
-    }
-  }, []);
+    if (!dataTags?.length) return;
+
+    setTags(current => (current.length > 0 ? current : [...new Set(dataTags)]));
+    setTagsValid(true);
+  }, [dataTags, setTags, setTagsValid]);
 
   function handleKeyDown(e) {
     if (e.key !== 'Control') return;

@@ -1,102 +1,114 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
-@import url('https://fonts.googleapis.com/css2?family=Jacques+Francois&family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jacques+Francois&family=Roboto&display=swap');
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: #F5F5F5;
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(240, 5%, 96%, 1) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, hsla(240, 5%, 98%, 1) 0, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .bg-grid-zinc {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
+  }
+  
+  .glass {
+    @apply bg-background/60 backdrop-blur-md border-border/50;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-semibold tracking-tight text-foreground;
 }
 
 h1 {
-  font-family: 'Roboto', sans-serif;
-  font-size: 2em;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.1;
 }
 
 h2 {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.5em;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.2;
 }
 
 h3 {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.17em;
-}
-
-h4 {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1em;
-}
-
-h5 {
-  font-family: 'Roboto', sans-serif;
-  font-size: 0.83em;
-}
-
-h6 {
-  font-family: 'Roboto', sans-serif;
-  font-size: 0.67em;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.3;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.tag-item {
-  background-color: rgb(255, 255, 255);
-  display: inline-block;
-  padding: .5em .75em;
-  border-radius: 20px;
-  border-color: rgb(0, 0, 0);
-  border-style: solid;
-  border-width: 1.5px;
-  margin-left: 5px;
-}
-
-.tag-item .close {
-  height: 20px;
-  width: 20px;
-  background-color: rgba(239, 45, 45, 0.851);
-  border-color: rgb(0, 0, 0);
-  border-style: solid;
-  border-width: 1.5px;
-  color: rgb(0, 0, 0);
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: .5em;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.tags-input {
-  flex-grow: 1;
-  padding: .5em 0;
-  border: none;
-  outline: none;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
 }

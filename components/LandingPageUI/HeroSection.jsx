@@ -1,174 +1,94 @@
-import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { BsArrowDownCircle } from 'react-icons/bs';
+import { ArrowRight, Compass, Search, UserPlus, Users, Zap } from 'lucide-react';
 
-import HeroImage from '../../assets/waza_full_logo.png';
+import { Button } from '../UI/button';
 
 function HeroSection({ scrollDown }) {
   return (
-    <section className='relative'>
-      {/* Illustration behind hero content */}
-      <div
-        className='absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none'
-        aria-hidden='true'
-      >
-        <svg
-          width='1360'
-          height='578'
-          viewBox='0 0 1360 578'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <defs>
-            <linearGradient
-              x1='50%'
-              y1='0%'
-              x2='50%'
-              y2='100%'
-              id='illustration-01'
-            >
-              <stop stopColor='#FFF' offset='0%' />
-              <stop stopColor='#EAEAEA' offset='77.402%' />
-              <stop stopColor='#DFDFDF' offset='100%' />
-            </linearGradient>
-          </defs>
-          <g fill='url(#illustration-01)' fillRule='evenodd'>
-            <circle cx='1232' cy='128' r='128' />
-            <circle cx='155' cy='443' r='64' />
-          </g>
-        </svg>
-      </div>
-
-      <div className='max-w-6xl mx-auto px-4 sm:px-6'>
-        {/* Hero content */}
-        <div className='pt-32 pb-12 md:pt-40 md:pb-20'>
-          {/* Section header */}
-          <div className='text-center pb-12 md:pb-16'>
-            <h1
-              className='text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4'
-              data-aos='zoom-y-out'
-            >
-              Make your project{' '}
-              <span className='bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-yellow-400'>
-                Reality
-              </span>
-            </h1>
-            <div className='max-w-3xl mx-auto'>
-              <p
-                className='text-xl text-gray-600 mb-8'
-                data-aos='zoom-y-out'
-                data-aos-delay='150'
-              >
-                Let's build your dream project together with a community of
-                like-minded developers.
-              </p>
-              <div
-                className='max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center'
-                data-aos='zoom-y-out'
-                data-aos-delay='300'
-              >
-                <div>
-                  <Link href='/dashboard'>
-                    <button
-                      type='button'
-                      className='text-white  bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-md p-0.5 px-5 py-3 text-center mr-2 mb-2'
-                    >
-                      Try Now for Free!
-                    </button>
-                  </Link>
-                </div>
-                <div>
-                  <button
-                    onClick={scrollDown}
-                    className='relative  btn-scroll inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-md font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800'
-                  >
-                    <span className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
-                      What's Waza?
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
+    <section className='relative pt-24 pb-32 md:pt-32 md:pb-48 overflow-hidden'>
+      {/* Background patterns */}
+      <div className='absolute inset-0 bg-grid-zinc -z-10 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_100%)] opacity-40' />
+      <div className='absolute top-0 left-1/2 -translate-x-1/2 -z-10 h-[500px] w-full max-w-[1200px] bg-primary/5 blur-[120px] rounded-full' />
+      
+      <div className='container mx-auto px-4'>
+        <div className='flex flex-col items-center text-center space-y-10'>
+          {/* Floating Badge */}
+          <div className='inline-flex items-center gap-2 rounded-full border glass px-4 py-2 text-sm font-semibold shadow-xl ring-1 ring-border animate-in fade-in slide-in-from-top-4 duration-1000'>
+            <div className='h-2 w-2 rounded-full bg-emerald-500 animate-pulse' />
+            <span className='text-muted-foreground'>Now live for startup projects and co-founder discovery</span>
           </div>
 
-          {/* Hero image */}
-          <div>
-            <div
-              className='relative flex justify-center mb-8'
-              data-aos='zoom-y-out'
-              data-aos-delay='450'
-            >
-              <div className='flex flex-col justify-center'>
-                <Image
-                  className='mx-auto rounded-full'
-                  src={HeroImage}
-                  width='768'
-                  height='432'
-                  alt='Hero'
-                />
-                <svg
-                  className='absolute inset-0 max-w-full mx-auto md:max-w-none h-auto'
-                  width='768'
-                  height='432'
-                  viewBox='0 0 768 432'
-                  xmlns='http://www.w3.org/2000/svg'
-                  xmlnsXlink='http://www.w3.org/1999/xlink'
-                >
-                  <defs>
-                    <linearGradient
-                      x1='50%'
-                      y1='0%'
-                      x2='50%'
-                      y2='100%'
-                      id='hero-ill-a'
-                    >
-                      <stop stopColor='#FFF' offset='0%' />
-                      <stop stopColor='#EAEAEA' offset='77.402%' />
-                      <stop stopColor='#DFDFDF' offset='100%' />
-                    </linearGradient>
+          {/* Main Title */}
+          <div className='max-w-5xl space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000'>
+            <h1 className='text-6xl font-black tracking-tight lg:text-8xl leading-[0.9] text-gradient'>
+              Find a co-founder, <br />
+              or join the right startup.
+            </h1>
+            <p className='mx-auto max-w-2xl text-xl text-muted-foreground leading-relaxed md:text-2xl font-medium'>
+              Waza is a two-sided startup network: browse projects that need a
+              co-founder, or advertise yourself as someone looking for the
+              right startup to join.
+            </p>
+          </div>
 
-                    <linearGradient
-                      x1='50%'
-                      y1='0%'
-                      x2='50%'
-                      y2='99.24%'
-                      id='hero-ill-b'
-                    >
-                      <stop stopColor='#FFF' offset='0%' />
-                      <stop stopColor='#EAEAEA' offset='48.57%' />
-                      <stop stopColor='#DFDFDF' stopOpacity='0' offset='100%' />
-                    </linearGradient>
-                  </defs>
-                  <g fill='none' fillRule='evenodd'>
-                    <circle
-                      fillOpacity='.04'
-                      fill='url(#hero-ill-a)'
-                      cx='384'
-                      cy='216'
-                      r='128'
-                    />
-                    <circle
-                      fillOpacity='.16'
-                      fill='url(#hero-ill-b)'
-                      cx='384'
-                      cy='216'
-                      r='96'
-                    />
-                    <g fillRule='nonzero'>
-                      <use fill='#000' xlinkHref='#hero-ill-d' />
-                      <use fill='url(#hero-ill-e)' xlinkHref='#hero-ill-d' />
-                    </g>
-                  </g>
-                </svg>
-              </div>
-              <button
-                className='absolute top-full flex items-center transform -translate-y-1/2 bg-white rounded-full font-medium group p-4 shadow-lg'
-                onClick={scrollDown}
-                aria-controls='modal'
+          {/* CTAs */}
+          <div className='flex flex-col sm:flex-row gap-5 pt-4 animate-in fade-in slide-in-from-bottom-12 duration-1000'>
+            <Link href='/projects'>
+              <Button size='lg' className='px-10 h-14 text-lg font-bold rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] hover:translate-y-[-2px] transition-all'>
+                Find Projects
+                <ArrowRight className='ml-2 h-5 w-5' />
+              </Button>
+            </Link>
+            <Link href='/cofounders'>
+              <Button
+                variant='outline'
+                size='lg'
+                className='px-10 h-14 text-lg font-bold rounded-2xl glass hover:bg-muted/50 transition-all'
               >
-                <BsArrowDownCircle className='animate-bounce w-5 h-5' />
-                <span className='ml-3'>GET STARTED</span>
-              </button>
+                Find Co-Founders
+              </Button>
+            </Link>
+          </div>
+
+          {/* Feature highlights grid */}
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl pt-24'>
+            <div className='group relative p-8 rounded-3xl border bg-card/50 glass hover:bg-card transition-all duration-300'>
+              <div className='absolute -top-4 left-8 p-3 rounded-2xl bg-primary text-primary-foreground shadow-lg ring-4 ring-background'>
+                <Users className='h-6 w-6' />
+              </div>
+              <div className='pt-4'>
+                <h3 className='text-xl font-bold mb-3'>Co-Founders</h3>
+                <p className='text-muted-foreground leading-relaxed'>
+                  Discover technical and non-technical people who are actively
+                  looking for the right startup to join.
+                </p>
+              </div>
+            </div>
+            
+            <div className='group relative p-8 rounded-3xl border bg-card/50 glass hover:bg-card transition-all duration-300'>
+              <div className='absolute -top-4 left-8 p-3 rounded-2xl bg-primary text-primary-foreground shadow-lg ring-4 ring-background'>
+                <Compass className='h-6 w-6' />
+              </div>
+              <div className='pt-4'>
+                <h3 className='text-xl font-bold mb-3'>Project Discovery</h3>
+                <p className='text-muted-foreground leading-relaxed'>
+                  Browse startup briefs by stage, commitment, and role gap to
+                  find projects that are genuinely worth joining.
+                </p>
+              </div>
+            </div>
+            
+            <div className='group relative p-8 rounded-3xl border bg-card/50 glass hover:bg-card transition-all duration-300'>
+              <div className='absolute -top-4 left-8 p-3 rounded-2xl bg-primary text-primary-foreground shadow-lg ring-4 ring-background'>
+                <Zap className='h-6 w-6' />
+              </div>
+              <div className='pt-4'>
+                <h3 className='text-xl font-bold mb-3'>Clear Next Step</h3>
+                <p className='text-muted-foreground leading-relaxed'>
+                  Make the fit obvious early, then move directly into an
+                  application or co-founder conversation.
+                </p>
+              </div>
             </div>
           </div>
         </div>

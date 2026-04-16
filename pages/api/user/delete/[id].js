@@ -1,19 +1,26 @@
-import { getSession } from 'next-auth/react';
-import prisma from '../../../../utils/prisma';
+import { getBetterAuthSession } from '../../../../lib/better-auth-server';
+import { deleteUserById, getUserByEmail } from '../../../../utils/supabase-db';
 
 export default async function main(req, res) {
   const { id } = req.query;
 
   try {
-    const projects = await prisma.user.delete({
-      where: {
-        id: id,
-      },
-    });
+    const session = await getBetterAuthSession(req, { syncAppUser: true });
 
-    return await res.json(projects);
+    if (!session?.user?.email) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const currentUser = await getUserByEmail(session.user.email);
+
+    if (!currentUser || currentUser.id !== id) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    const user = await deleteUserById(id);
+    return res.status(200).json(user);
   } catch (err) {
     console.error('Issue with Project[id]: ', err);
-    return res.status(err.code);
+    return res.status(500).json({ error: err.message });
   }
 }

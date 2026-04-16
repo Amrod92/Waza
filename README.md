@@ -22,18 +22,27 @@ To get started with Waza, please follow these steps:
 
 3. Create a `.env.local` file based on the `.env.local.example` file and update the values as needed.
 
-4. Install the Prisma CLI by running `npx prisma` in the command line.
-
-5. Create the schema by running `prisma generate` in the command line, run Prisma `npm run prisma`.
+4. Create the Supabase schema by running the SQL in `supabase/schema.sql` in your Supabase project.
 
 To run the development server, use the command `npm run dev`.
+
+## Data Migration
+
+If you need to move existing data from an older PostgreSQL database into Supabase:
+
+1. Set `SOURCE_DATABASE_URL` to the old PostgreSQL database.
+2. Set `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` for the target Supabase project.
+3. Run `npm run migrate:data` to upsert data into Supabase.
+4. Run `npm run migrate:data -- --truncate` if you want to clear the target app tables before importing.
+
+The migration script copies the app tables `User`, `UserSocialProfile`, `Project`, `DevelopmentTool`, and `Communication`. It does not migrate legacy NextAuth auth tables because the app now uses JWT sessions in NextAuth.
 
 ## Tech Stack 🧪
 
 The current tech stack with its relative documentation, tips and tricks can be found [here](https://www.notion.so/Tech-Stack-a6c1bcecd71d41498665bc4aa6a4d9d6)
 
-**Client:** React, Next.Js 12.2.5, TailwindCSS, NextAuth.js, React Icons, TanStack Query v4
+**Client:** React, Next.js 16, TailwindCSS, NextAuth.js, React Icons, TanStack Query v5
 
-**Server:** Node, Express, Prisma
+**Server:** Node, Next.js API routes, Supabase
 
-**Database & Hosting:** PostgreSQL, Railway, Vercel
+**Database & Hosting:** Supabase Postgres, Vercel

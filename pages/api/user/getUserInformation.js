@@ -1,26 +1,15 @@
-import { getSession } from 'next-auth/react';
-import prisma from '../../../utils/prisma';
+import { getBetterAuthSession } from '../../../lib/better-auth-server';
+import { getUserByEmail } from '../../../utils/supabase-db';
 
 export default async function main(req, res) {
   try {
-    const session = await getSession({ req });
-
-    const userData = await prisma.user.findUnique({
-      // Returns all projects with that specific email address
-      where: {
-        email: session?.user?.email,
-      },
-      include: {
-        // Doing a Join
-        userSocialProfile: true,
-      },
-    });
-
-    return await res.json(userData);
+    const session = await getBetterAuthSession(req, { syncAppUser: true });
+    const userData = await getUserByEmail(session?.user?.email);
+    return res.status(200).json(userData);
   } catch (err) {
     console.error('Issue with getUserInformation: ', err);
-    return res.status(err.code);
+    return res.status(500).json({ error: err.message });
   }
 
-  return await res.json({ message: 'Error inside getUserInformation' });
+  return res.status(500).json({ message: 'Error inside getUserInformation' });
 }

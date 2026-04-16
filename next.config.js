@@ -1,13 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  allowedDevOrigins: ['192.168.0.55'],
   images: {
-    domains: [
-      'https://xsgames.co/',
-      'avatars.githubusercontent.com',
-      'res.cloudinary.com',
-      'pbs.twimg.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'xsgames.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'pbs.twimg.com',
+      },
     ],
   },
 };

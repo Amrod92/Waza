@@ -1,17 +1,17 @@
+import { Badge } from '../UI/badge';
+
 const UserHobbiesTags = ({ dataHobbies }) => {
   return (
-    <>
-      <div className='relative z-0 mb-6 mt-4 w-full group'>
-        {dataHobbies.map((hobby, index) => (
-          <span
-            key={index}
-            className='inline-block bg-indigo-100 text-indigo-800 font-medium mr-2 mb-2 px-3 py-1 rounded dark:bg-indigo-200 dark:text-indigo-900 text-sm sm:text-base'
-          >
-            {hobby}
-          </span>
-        ))}
-      </div>
-    </>
+    <div className='relative z-0 mb-2 mt-4 flex w-full flex-wrap gap-2'>
+      {dataHobbies.map(hobby => (
+        <Badge
+          key={hobby}
+          className='border-[#d9d8ef] bg-[#f1f0ff] px-3 py-1 text-sm text-[#4b5387]'
+        >
+          {hobby}
+        </Badge>
+      ))}
+    </div>
   );
 };
 

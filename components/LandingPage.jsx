@@ -1,22 +1,23 @@
+'use client';
+
 import { useRef } from 'react';
 
-import HeroSection from './LandingPageUI/HeroSection';
-import FeaturesHome from './LandingPageUI/FeaturesHome';
 import FeaturesBlocks from './LandingPageUI/FeaturesBlocks';
-import Testimonials from './LandingPageUI/Testimonials';
+import FeaturesHome from './LandingPageUI/FeaturesHome';
+import HeroSection from './LandingPageUI/HeroSection';
 import Newsletter from './LandingPageUI/Newsletter';
+import Testimonials from './LandingPageUI/Testimonials';
 
 const LandingPage = () => {
   const otherSectionRef = useRef(null);
 
   const scrollToOtherSection = () => {
-    otherSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    otherSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
-    <div className='flex flex-col min-h-screen overflow-hidden'>
-      <main className='flex-grow'>
-        {/*  Page sections */}
+    <div className='relative flex min-h-screen flex-col overflow-hidden bg-background'>
+      <main className='relative z-10 flex-grow'>
         <HeroSection scrollDown={scrollToOtherSection} />
         <div ref={otherSectionRef}>
           <FeaturesHome />

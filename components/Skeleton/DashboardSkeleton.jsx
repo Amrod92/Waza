@@ -4,28 +4,31 @@ const ProjectSkeleton = () => {
   const CARDS = [];
   for (let i = 0; i < 5; i++) {
     CARDS.push(
-      <div className='bg-white m5 pt-3 pb-3 pl-5 mt-5 grid grid-cols-1 md:grid-cols-6 gap-4 p-2 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 transition ease-in-out delay-300 hover:-translate-y-1 hover:scale-110 duration-700'>
+      <div
+        key={i}
+        className='bg-white m5 pt-3 pb-3 pl-5 mt-5 grid grid-cols-1 md:grid-cols-6 gap-4 p-2 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 transition ease-in-out delay-300 hover:-translate-y-1 hover:scale-110 duration-700'
+      >
         <div className='md:col-span-5'>
           <div className='flex flex-col md:flex-row'>
             <div className='md:mr-2'>
-              <div class='flex items-center mt-4 space-x-3 animate-pulse flex-row duration-150'>
+              <div className='mt-4 flex flex-row items-center space-x-3 animate-pulse duration-150'>
                 <svg
-                  class='text-gray-200 w-16 h-16 dark:text-gray-700'
+                  className='h-16 w-16 text-gray-200 dark:text-gray-700'
                   aria-hidden='true'
                   fill='currentColor'
                   viewBox='0 0 20 20'
                   xmlns='http://www.w3.org/2000/svg'
                 >
                   <path
-                    fill-rule='evenodd'
+                    fillRule='evenodd'
                     d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z'
-                    clip-rule='evenodd'
-                  ></path>
+                    clipRule='evenodd'
+                  />
                 </svg>
                 <div>
-                  <div class='h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2'></div>
-                  <div class='h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-2'></div>
-                  <div class='w-48 h-2 bg-gray-200 rounded-full dark:bg-gray-700'></div>
+                  <div className='mb-2 h-2.5 w-32 rounded-full bg-gray-200 dark:bg-gray-700'></div>
+                  <div className='mb-2 h-2.5 w-48 rounded-full bg-gray-200 dark:bg-gray-700'></div>
+                  <div className='h-2 w-48 rounded-full bg-gray-200 dark:bg-gray-700'></div>
                 </div>
               </div>
             </div>

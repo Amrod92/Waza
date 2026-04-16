@@ -1,111 +1,57 @@
-import Image from 'next/image';
+import { Quote } from 'lucide-react';
+import { Card, CardContent } from '../UI/card';
 
-import TestimonialImage from '../../assets/testimonial.png';
+const quotes = [
+  {
+    quote:
+      'The hardest part is rarely having an idea. It is finding people you would actually trust to build with.',
+    role: 'Why Waza exists',
+  },
+  {
+    quote:
+      'A good co-founder product reduces ambiguity: what is being built, what kind of partner is needed, and why this person is credible.',
+    role: 'Design principle',
+  },
+  {
+    quote:
+      'The best founder networks make serious co-founders easier to find before introductions feel transactional.',
+    role: 'Product goal',
+  },
+];
 
 function Testimonials() {
   return (
-    <section className='relative'>
-      {/* Illustration behind content */}
-      <div
-        className='absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none -mb-32'
-        aria-hidden='true'
-      >
-        <svg
-          width='1760'
-          height='518'
-          viewBox='0 0 1760 518'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <defs>
-            <linearGradient
-              x1='50%'
-              y1='0%'
-              x2='50%'
-              y2='100%'
-              id='illustration-02'
-            >
-              <stop stopColor='#FFF' offset='0%' />
-              <stop stopColor='#EAEAEA' offset='77.402%' />
-              <stop stopColor='#DFDFDF' offset='100%' />
-            </linearGradient>
-          </defs>
-          <g
-            transform='translate(0 -3)'
-            fill='url(#illustration-02)'
-            fillRule='evenodd'
-          >
-            <circle cx='1630' cy='128' r='128' />
-            <circle cx='178' cy='481' r='40' />
-          </g>
-        </svg>
+    <section className='container mx-auto px-4 py-32'>
+      <div className='max-w-3xl mb-24 space-y-6 text-center mx-auto'>
+        <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider'>
+          Product Philosophy
+        </div>
+        <h2 className='text-5xl font-black tracking-tight leading-tight'>
+          Built for people who want to <br /> stop starting alone.
+        </h2>
       </div>
 
-      <div className='max-w-6xl mx-auto px-4 sm:px-6'>
-        <div className='py-12 md:py-20'>
-          {/* Testimonials */}
-          <div className='max-w-3xl mx-auto mt-20' data-aos='zoom-y-out'>
-            <div className='relative flex items-start border-2 border-gray-200 rounded bg-white'>
-              {/* Testimonial */}
-              <div className='text-center px-12 py-8 pt-20 mx-4 md:mx-0'>
-                <div className='absolute top-0 -mt-8 left-1/2 transform -translate-x-1/2'>
-                  <svg
-                    className='absolute top-0 right-0 -mt-3 -mr-8 w-16 h-16 fill-current text-blue-500'
-                    viewBox='0 0 64 64'
-                    aria-hidden='true'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path d='M37.89 58.338c-2.648-5.63-3.572-10.045-2.774-13.249.8-3.203 8.711-13.383 23.737-30.538l2.135.532c-6.552 10.033-10.532 17.87-11.939 23.515-.583 2.34.22 6.158 2.41 11.457l-13.57 8.283zm-26.963-6.56c-2.648-5.63-3.572-10.046-2.773-13.25.799-3.203 8.71-13.382 23.736-30.538l2.136.533c-6.552 10.032-10.532 17.87-11.94 23.515-.583 2.339.22 6.158 2.41 11.456l-13.57 8.283z' />
-                  </svg>
-                  <Image
-                    className='relative rounded-full'
-                    src='https://pbs.twimg.com/profile_images/1590968738358079488/IY9Gx6Ok_400x400.jpg'
-                    width='96'
-                    height='96'
-                    alt='Testimonial 01'
-                  />
-                </div>
-                <blockquote className='text-xl font-medium mb-4'>
-                  “ When something is important enough, you do it even if the
-                  odds are not in your favor. “
-                </blockquote>
-                <cite className='block font-bold text-lg not-italic mb-1'>
-                  Elon Musk
-                </cite>
-                <div className='text-gray-600'>
-                  <span>CEO & Co-Founder</span>{' '}
-                  <a
-                    className='text-blue-600 hover:underline'
-                    href='https://twitter.com/SpaceX'
-                    target='_blank'
-                  >
-                    @SpaceX
-                  </a>{' '}
-                  <a
-                    className='text-blue-600 hover:underline'
-                    href='https://twitter.com/Tesla'
-                    target='_blank'
-                  >
-                    @Tesla
-                  </a>{' '}
-                  <a
-                    className='text-blue-600 hover:underline'
-                    href='https://twitter.com/Twitter'
-                    target='_blank'
-                  >
-                    @Twitter
-                  </a>{' '}
-                  <a
-                    className='text-blue-600 hover:underline'
-                    href='https://twitter.com/boringcompany'
-                    target='_blank'
-                  >
-                    @The Boring Company
-                  </a>
-                </div>
+      <div className='grid gap-8 lg:grid-cols-3'>
+        {quotes.map((item, index) => (
+          <Card key={index} className='group relative flex flex-col justify-between p-10 rounded-[40px] border-2 bg-muted/20 hover:bg-card hover:border-primary/20 transition-all duration-500 shadow-none hover:shadow-2xl hover:shadow-primary/5'>
+            <div className='absolute -top-4 -left-4 p-4 rounded-2xl bg-background border text-primary shadow-lg group-hover:scale-110 transition-transform'>
+              <Quote className='h-6 w-6' />
+            </div>
+            
+            <div className='space-y-8'>
+              <p className='text-2xl font-bold italic leading-relaxed text-foreground tracking-tight'>
+                “{item.quote}”
+              </p>
+              
+              <div className='pt-8 border-t space-y-2'>
+                <p className='text-sm font-black uppercase tracking-[0.2em] text-primary'>
+                  {item.role}
+                </p>
+                <div className='h-1 w-8 bg-primary rounded-full group-hover:w-16 transition-all duration-500' />
               </div>
             </div>
-          </div>
-        </div>
+          </Card>
+        ))}
       </div>
     </section>
   );

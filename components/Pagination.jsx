@@ -1,43 +1,42 @@
 import React from 'react';
+import { Button } from './UI/button';
 
 const Pagination = ({ prjData, setCurrentPage }) => {
   return (
     <div className='ml-5'>
       <nav aria-label='Page navigation'>
-        <ul className='inline-flex shadow-md'>
+        <ul className='inline-flex gap-1 rounded-lg border border-zinc-200 bg-white p-1 shadow-sm'>
           <li>
-            <button
-              className='disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 h-10 px-5 text-red-600 transition-colors duration-150 bg-white rounded-l-lg focus:shadow-outline hover:bg-red-100'
+            <Button
+              variant='ghost'
               disabled={prjData.currentPage === 1}
               onClick={() => setCurrentPage(currentPage => currentPage - 1)}
             >
               Prev
-            </button>
+            </Button>
           </li>
           {Array.from({ length: prjData.totalPages }, (_, i) => i + 1).map(
             page => (
               <li key={page}>
-                <button
-                  className={`h-10 px-5 text-${
-                    prjData.currentPage === page
-                      ? 'white bg-red-600'
-                      : 'red-600 bg-white'
-                  } transition-colors duration-150 focus:shadow-outline hover:bg-red-100`}
+                <Button
+                  variant={
+                    prjData.currentPage === page ? 'default' : 'ghost'
+                  }
                   onClick={() => setCurrentPage(page)}
                 >
                   {page}
-                </button>
+                </Button>
               </li>
             )
           )}
           <li>
-            <button
-              className='disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none h-10 px-5 text-red-600 transition-colors duration-150 bg-white rounded-r-lg focus:shadow-outline hover:bg-red-100'
+            <Button
+              variant='ghost'
               onClick={() => setCurrentPage(currentPage => currentPage + 1)}
               disabled={prjData.totalPages === prjData.currentPage}
             >
               Next
-            </button>
+            </Button>
           </li>
         </ul>
       </nav>

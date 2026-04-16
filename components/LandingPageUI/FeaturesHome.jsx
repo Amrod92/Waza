@@ -1,256 +1,148 @@
-import { useState, useRef, useEffect } from 'react';
-import Transition from '../../utils/Transition';
-import Image from 'next/image';
+'use client';
 
-import PairProgramming from '../../assets/pair_programming.png';
+import { useState } from 'react';
+import Image from 'next/image';
+import { ArrowRight, BriefcaseBusiness, Layers3, Users2, CheckCircle2 } from 'lucide-react';
+
 import BuildingWebsite from '../../assets/building_websites.png';
 import Hire from '../../assets/hire.png';
+import PairProgramming from '../../assets/pair_programming.png';
+import { Button } from '../UI/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../UI/card';
+
+const featureTabs = [
+  {
+    id: 1,
+    eyebrow: 'Discover',
+    title: 'Find the right startup projects',
+    description:
+      'Browse startup projects by market, stage, and co-founder fit so you can focus on opportunities that are actually worth a serious conversation.',
+    image: PairProgramming,
+    points: ['Advanced filtering by market and co-founder need', 'Transparent startup stage indicators', 'Direct insight into what the project still lacks'],
+    icon: Users2,
+    color: 'bg-blue-500',
+  },
+  {
+    id: 2,
+    eyebrow: 'Build',
+    title: 'Craft your project brief',
+    description:
+      'Waza gives you a clearer way to describe the startup, why it matters, and exactly what kind of co-founder would make it stronger.',
+    image: BuildingWebsite,
+    points: ['Optimized posting flow for founder clarity', 'Signal your proof and seriousness', 'Credible, context-rich founder profiles'],
+    icon: Layers3,
+    color: 'bg-purple-500',
+  },
+  {
+    id: 3,
+    eyebrow: 'Grow',
+    title: 'Move to the right conversation',
+    description:
+      'Manage your startup briefs and track interest from potential co-founders. The goal is to move from first look to the first serious conversation faster.',
+    image: Hire,
+    points: ['Dedicated project dashboards', 'Real-time interest signals', 'Streamlined path to founder conversation'],
+    icon: BriefcaseBusiness,
+    color: 'bg-emerald-500',
+  },
+];
 
 function Features() {
-  const [tab, setTab] = useState(1);
-
-  const tabs = useRef(null);
-
-  const heightFix = () => {
-    if (tabs.current.children[tab]) {
-      tabs.current.style.height =
-        tabs.current.children[tab - 1].offsetHeight + 'px';
-    }
-  };
-
-  useEffect(() => {
-    heightFix();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tab]);
+  const [activeTab, setActiveTab] = useState(1);
+  const activeFeature = featureTabs.find(f => f.id === activeTab);
 
   return (
-    <section className='relative'>
-      {/* Section background (needs .relative class on parent and next sibling elements) */}
-      <div
-        className='absolute inset-0 bg-gray-100 pointer-events-none mb-16'
-        aria-hidden='true'
-      ></div>
-      <div className='absolute left-0 right-0 m-auto w-px p-px h-20 bg-gray-200 transform -translate-y-1/2'></div>
-
-      <div className='relative max-w-6xl mx-auto px-4 sm:px-6'>
-        <div className='pt-12 md:pt-20'>
-          {/* Section header */}
-          <div className='max-w-3xl mx-auto text-center pb-12 md:pb-16'>
-            <h1 className='h2 mb-4'>Explore the solutions</h1>
-            <p className='text-xl text-gray-600'>
-              Through our platform, you can explore a wide range of solutions
-              and opportunities, connect with other members of the community,
-              and share your projects and ideas with the world. Join Waza today
-              and discover the power of collaboration!
+    <section className='container mx-auto px-4 py-32'>
+      <div className='flex flex-col lg:flex-row gap-20 items-center'>
+        <div className='lg:w-1/2 space-y-12'>
+          <div className='space-y-6'>
+            <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider'>
+              <Zap className='h-3 w-3' />
+              The Co-Founder Flow
+            </div>
+            <h2 className='text-5xl font-black tracking-tight leading-[1.1]'>
+              One platform. <br />
+              Zero guesswork.
+            </h2>
+            <p className='text-xl text-muted-foreground leading-relaxed max-w-xl'>
+              Waza is designed around the three stages that matter most:
+              discovery, positioning, and founder conversation.
             </p>
           </div>
 
-          {/* Section content */}
-          <div className='md:grid md:grid-cols-12 md:gap-6'>
-            {/* Content */}
-            <div
-              className='max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6'
-              data-aos='fade-right'
-            >
-              <div className='md:pr-4 lg:pr-12 xl:pr-16 mb-8'>
-                <h3 className='h3 mb-3'>One platform all tools</h3>
-                <p className='text-xl text-gray-600'>
-                  Let's build that dreaming project with the help of other
-                  developers.
-                </p>
-              </div>
-              {/* Tabs buttons */}
-              <div className='mb-8 md:mb-0'>
-                <a
-                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
-                    tab !== 1
-                      ? 'bg-white shadow-md border-gray-200 hover:shadow-lg'
-                      : 'bg-gray-200 border-transparent'
-                  }`}
-                  href='#0'
-                  onClick={e => {
-                    e.preventDefault();
-                    setTab(1);
-                  }}
-                >
-                  <div>
-                    <div className='font-bold leading-snug tracking-tight mb-1'>
-                      Discover Collaborative Opportunities
-                    </div>
-                    <div className='text-gray-600'>
-                      Waza is a community-driven platform that enables people to
-                      collaborate on personal and non-commercial projects. Our
-                      platform provides a space for individuals to connect with
-                      others who share their interests and collaborate on
-                      projects of mutual interest.
-                    </div>
-                  </div>
-                  <div className='flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3'>
-                    <svg
-                      className='w-3 h-3 fill-current'
-                      viewBox='0 0 12 12'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <path d='M11.953 4.29a.5.5 0 00-.454-.292H6.14L6.984.62A.5.5 0 006.12.173l-6 7a.5.5 0 00.379.825h5.359l-.844 3.38a.5.5 0 00.864.445l6-7a.5.5 0 00.075-.534z' />
-                    </svg>
-                  </div>
-                </a>
-                <a
-                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
-                    tab !== 2
-                      ? 'bg-white shadow-md border-gray-200 hover:shadow-lg'
-                      : 'bg-gray-200 border-transparent'
-                  }`}
-                  href='#0'
-                  onClick={e => {
-                    e.preventDefault();
-                    setTab(2);
-                  }}
-                >
-                  <div>
-                    <div className='font-bold leading-snug tracking-tight mb-1'>
-                      Build Your Dream Team with Waza
-                    </div>
-                    <div className='text-gray-600'>
-                      Whether you're looking for a co-founder for your startup,
-                      seeking collaborators for a creative project, or simply
-                      want to connect with like-minded individuals, Waza offers
-                      a space for you to explore your options and connect with
-                      others who share your passions.
-                    </div>
-                  </div>
-                  <div className='flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3'>
-                    <svg
-                      className='w-3 h-3 fill-current'
-                      viewBox='0 0 12 12'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <path
-                        d='M11.854.146a.5.5 0 00-.525-.116l-11 4a.5.5 0 00-.015.934l4.8 1.921 1.921 4.8A.5.5 0 007.5 12h.008a.5.5 0 00.462-.329l4-11a.5.5 0 00-.116-.525z'
-                        fillRule='nonzero'
-                      />
-                    </svg>
-                  </div>
-                </a>
-                <a
-                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
-                    tab !== 3
-                      ? 'bg-white shadow-md border-gray-200 hover:shadow-lg'
-                      : 'bg-gray-200 border-transparent'
-                  }`}
-                  href='#0'
-                  onClick={e => {
-                    e.preventDefault();
-                    setTab(3);
-                  }}
-                >
-                  <div>
-                    <div className='font-bold leading-snug tracking-tight mb-1'>
-                      The Right People for Your Project
-                    </div>
-                    <div className='text-gray-600'>
-                      Whether you're a designer, developer, writer, or
-                      entrepreneur, we'll help you find the right people to
-                      bring your project to life.
-                    </div>
-                  </div>
-                  <div className='flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3'>
-                    <svg
-                      className='w-3 h-3 fill-current'
-                      viewBox='0 0 12 12'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <path
-                        d='M11.334 8.06a.5.5 0 00-.421-.237 6.023 6.023 0 01-5.905-6c0-.41.042-.82.125-1.221a.5.5 0 00-.614-.586 6 6 0 106.832 8.529.5.5 0 00-.017-.485z'
-                        fill='#191919'
-                        fillRule='nonzero'
-                      />
-                    </svg>
-                  </div>
-                </a>
-              </div>
-            </div>
+          <div className='grid gap-4'>
+            {featureTabs.map(item => {
+              const Icon = item.icon;
+              const active = activeTab === item.id;
 
-            {/* Tabs items */}
-            <div
-              className='max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1 md:mt-10 sm:mt-32 lg:mt-32 xl:mt-32'
-              data-aos='zoom-y-out'
-              ref={tabs}
-            >
-              <div className='relative flex flex-col text-center lg:text-right '>
-                {/* Item 1 */}
-                <Transition
-                  show={tab === 1}
-                  appear={true}
-                  className='w-full'
-                  enter='transition ease-in-out duration-700 transform order-first'
-                  enterStart='opacity-0 translate-y-16'
-                  enterEnd='opacity-100 translate-y-0'
-                  leave='transition ease-in-out duration-300 transform absolute'
-                  leaveStart='opacity-100 translate-y-0'
-                  leaveEnd='opacity-0 -translate-y-16'
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`group relative flex items-start gap-6 p-6 rounded-3xl text-left border-2 transition-all duration-300 ${
+                    active
+                      ? 'bg-card border-primary/50 shadow-2xl shadow-primary/10'
+                      : 'bg-muted/30 border-transparent hover:border-border hover:bg-muted/50'
+                  }`}
                 >
-                  <div className='relative inline-flex flex-col '>
-                    <Image
-                      className='md:max-w-none mx-auto rounded'
-                      src={PairProgramming}
-                      width='500'
-                      height='350'
-                      alt='Features bg'
-                    />
+                  <div className={`p-4 rounded-2xl transition-colors duration-300 ${active ? 'bg-primary text-primary-foreground' : 'bg-background text-muted-foreground group-hover:bg-background/80'}`}>
+                    <Icon className='h-6 w-6' />
                   </div>
-                </Transition>
-                {/* Item 2 */}
-                <Transition
-                  show={tab === 2}
-                  appear={true}
-                  className='w-full'
-                  enter='transition ease-in-out duration-700 transform order-first'
-                  enterStart='opacity-0 translate-y-16'
-                  enterEnd='opacity-100 translate-y-0'
-                  leave='transition ease-in-out duration-300 transform absolute'
-                  leaveStart='opacity-100 translate-y-0'
-                  leaveEnd='opacity-0 -translate-y-16'
-                >
-                  <div className='relative inline-flex flex-col'>
-                    <Image
-                      className='md:max-w-none mx-auto rounded'
-                      src={BuildingWebsite}
-                      width='500'
-                      height='350'
-                      alt='Features bg'
-                    />
+                  <div className='flex-1 space-y-1'>
+                    <div className='flex items-center justify-between'>
+                      <p className={`text-sm font-bold tracking-tight uppercase ${active ? 'text-primary' : 'text-muted-foreground'}`}>
+                        {item.eyebrow}
+                      </p>
+                      {active && <ArrowRight className='h-4 w-4 text-primary' />}
+                    </div>
+                    <h3 className={`text-xl font-black ${active ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
+                      {item.title}
+                    </h3>
                   </div>
-                </Transition>
-                {/* Item 3 */}
-                <Transition
-                  show={tab === 3}
-                  appear={true}
-                  className='w-full'
-                  enter='transition ease-in-out duration-700 transform order-first'
-                  enterStart='opacity-0 translate-y-16'
-                  enterEnd='opacity-100 translate-y-0'
-                  leave='transition ease-in-out duration-300 transform absolute'
-                  leaveStart='opacity-100 translate-y-0'
-                  leaveEnd='opacity-0 -translate-y-16'
-                >
-                  <div className='relative inline-flex flex-col'>
-                    <Image
-                      className='md:max-w-none mx-auto rounded'
-                      src={Hire}
-                      width='500'
-                      height='350'
-                      alt='Features bg'
-                    />
-                  </div>
-                </Transition>
+                  {active && (
+                    <div className='absolute left-[-10px] top-1/2 -translate-y-1/2 w-1.5 h-12 bg-primary rounded-full hidden lg:block' />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className='lg:w-1/2 w-full'>
+          <Card className='border-0 bg-muted/40 overflow-hidden rounded-[40px] shadow-2xl ring-1 ring-border'>
+            <div className='p-8 space-y-8'>
+              <div className='relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl'>
+                <Image
+                  src={activeFeature.image}
+                  alt={activeFeature.title}
+                  fill
+                  className='object-cover'
+                  priority
+                />
+              </div>
+              <div className='space-y-6'>
+                <div className='space-y-2'>
+                  <h3 className='text-3xl font-black tracking-tight'>{activeFeature.title}</h3>
+                  <p className='text-muted-foreground text-lg leading-relaxed'>
+                    {activeFeature.description}
+                  </p>
+                </div>
+                <div className='grid gap-4 pt-2'>
+                  {activeFeature.points.map(point => (
+                    <div key={point} className='flex items-center gap-3 font-medium text-sm p-4 rounded-2xl bg-background border shadow-sm transition-transform hover:scale-[1.02] cursor-default'>
+                      <CheckCircle2 className='h-5 w-5 text-primary shrink-0' />
+                      {point}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
   );
 }
+
+import { Zap } from 'lucide-react';
 
 export default Features;

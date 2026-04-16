@@ -1,64 +1,40 @@
-import { AiFillTwitterCircle, AiOutlineSlack } from 'react-icons/ai';
-import { FaDiscord } from 'react-icons/fa';
-import { BsTwitch } from 'react-icons/bs';
-import { TbWorld } from 'react-icons/tb';
-import Link from 'next/link';
+import { Mail, Globe, MessageSquare, Twitter, Slack, Twitch } from 'lucide-react';
+import { SiDiscord, SiSlack, SiTwitch, SiX } from 'react-icons/si';
 
 const CommunicationToolsCard = ({ commTools }) => {
+  if (!commTools) return <p className='text-sm text-muted-foreground italic'>No contact information provided.</p>;
+
+  const tools = [
+    { key: 'website', label: 'Personal site', icon: Globe, color: 'text-foreground' },
+    { key: 'discord', label: 'Preferred contact', icon: SiDiscord, color: 'text-[#5865F2]' },
+    { key: 'slack', label: 'Team space', icon: SiSlack, color: 'text-[#4A154B]' },
+    { key: 'twitch', label: 'Intro call or demo', icon: SiTwitch, color: 'text-[#9146FF]' },
+    { key: 'twitter', label: 'X / social profile', icon: SiX, color: 'text-foreground' },
+  ];
+
+  const activeTools = tools.filter(tool => commTools[tool.key]);
+
+  if (activeTools.length === 0) return <p className='text-sm text-muted-foreground italic'>No contact information provided.</p>;
+
   return (
-    <div>
-      <ul className='space-y-1 max-w-md list-inside text-gray-500 dark:text-gray-400'>
-        {commTools.website && (
-          <li className='flex items-center'>
-            <TbWorld className='text-black' />
-            <Link href={commTools.website}>
-              <a className='ml-1.5' target='_blank'>
-                Website
-              </a>
-            </Link>
-          </li>
-        )}
-        {commTools.discord && (
-          <li className='flex items-center'>
-            <FaDiscord className='text-[#7289da] md:text-[#7289da] lg:text-[#7289da] xl:text-[#7289da]' />
-            <Link href={commTools.discord}>
-              <a className='ml-1.5' target='_blank'>
-                Discord
-              </a>
-            </Link>
-          </li>
-        )}
-        {commTools.slack && (
-          <li className='flex items-center'>
-            <AiOutlineSlack className='text-[#E01E5A] md:text-[#E01E5A] lg:text-[#E01E5A] xl:text-[#E01E5A]' />
-            <Link href={commTools.slack}>
-              <a className='ml-1.5' target='_blank'>
-                Slack
-              </a>
-            </Link>
-          </li>
-        )}
-        {commTools.twitch && (
-          <li className='flex items-center'>
-            <BsTwitch className='text-[#6441a5] md:text-[#6441a5] lg:text-[#6441a5] xl:text-[#6441a5]' />
-            <Link href={commTools.twitch}>
-              <a className='ml-1.5' target='_blank'>
-                Twitch
-              </a>
-            </Link>
-          </li>
-        )}
-        {commTools.twitter && (
-          <li className='flex items-center'>
-            <AiFillTwitterCircle className='text-[#1D9BF0] md:text-[#1D9BF0] lg:text-[#1D9BF0] xl:text-[#1D9BF0]' />
-            <Link href={commTools.twitter}>
-              <a className='ml-1.5' target='_blank'>
-                Twitter
-              </a>
-            </Link>
-          </li>
-        )}
-      </ul>
+    <div className='grid gap-3'>
+      {activeTools.map((tool) => {
+        const Icon = tool.icon;
+        return (
+          <a
+            key={tool.key}
+            href={commTools[tool.key]}
+            target='_blank'
+            rel='noreferrer'
+            className='flex items-center gap-3 p-3 rounded-xl border bg-background hover:bg-accent hover:text-accent-foreground transition-all group'
+          >
+            <div className={`p-2 rounded-lg bg-muted group-hover:bg-background transition-colors ${tool.color}`}>
+              <Icon className='h-4 w-4' />
+            </div>
+            <span className='text-sm font-medium'>{tool.label}</span>
+          </a>
+        );
+      })}
     </div>
   );
 };
