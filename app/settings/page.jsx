@@ -48,6 +48,7 @@ import {
 import { Textarea } from '../../components/UI/textarea';
 import { Badge } from '../../components/UI/badge';
 import { Card, CardContent } from '../../components/UI/card';
+import { betterAuthClient } from '../../lib/better-auth-client';
 
 const socialFields = [
   { key: 'website', label: 'Website', placeholder: 'https://your-site.com', icon: Globe },
@@ -175,9 +176,27 @@ function SettingsContent() {
 
   const deleteAccount = useMutation({
     mutationFn: async () => {
-      await fetch(`/api/user/delete/${data.id}`, { method: 'DELETE' });
+      const response = await fetch(`/api/user/delete/${data.id}`, {
+        method: 'DELETE',
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(payload.error || `HTTP error! status: ${response.status}`);
+      }
+
+      return payload;
     },
-    onSuccess: () => router.push('/'),
+    onSuccess: async () => {
+      setIsOpen(false);
+      await betterAuthClient.signOut();
+      router.push('/');
+    },
+    onError: () => {
+      setIsOpen(false);
+      setShowErrorMessage(true);
+      setTimeout(() => setShowErrorMessage(false), 4000);
+    },
   });
 
   if (isLoading) return <div className='min-h-screen flex items-center justify-center bg-zinc-50'><LoadingSpinner /></div>;

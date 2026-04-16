@@ -87,6 +87,7 @@ Key endpoints:
 - `pages/api/project/update/putUserProject.js`
 - `pages/api/search/[slug].js`
 - `pages/api/user/[id].js`
+- `pages/api/user/connect/[id].js`
 - `pages/api/user/delete/[id].js`
 - `pages/api/user/getAllUsers.js`
 - `pages/api/user/getUserInformation.js`
@@ -114,6 +115,7 @@ Current auth behavior:
   - `verification`
 - The app still uses its own Supabase tables like `User` and `Project`.
 - `lib/better-auth.js` uses Better Auth `databaseHooks.user.create/update` to sync auth users into the app-level `User` table.
+- `lib/better-auth.js` also exports `deleteBetterAuthUserByEmail(email)` for full account deletion.
 - `lib/better-auth-server.js` provides `getBetterAuthSession(req, { syncAppUser: true })` for Pages API routes.
 - Use `syncAppUser: true` on authenticated API routes when the app-level `User` row must exist.
 
@@ -176,6 +178,7 @@ Common setup-sensitive failures:
 - If `SUPABASE_SERVICE_ROLE_KEY` is missing, server-side Supabase access fails even if Better Auth works.
 - If Supabase only has Better Auth tables and not the app tables from `supabase/schema.sql`, profile/project APIs fail because tables like `User` and `Project` do not exist.
 - If Better Auth works but the app-level `User` row is missing, some profile/settings routes can return `null` until the lazy sync path runs.
+- If only the app `User` row is deleted without deleting Better Auth records, the user can be recreated later by auth sync. The current delete-account flow now deletes both.
 
 ## UI System
 
@@ -264,17 +267,28 @@ Important nuance:
 Current behavior:
 
 - `User.show_in_cofounder_feed` controls whether a person appears on `/cofounders`
+- `User.availability` stores their declared marketplace availability
 - Default is `false`
 - Settings page exposes this as a `Private` / `Public` visibility choice
+- Settings page also exposes availability values such as `exploring`, `part_time`, and `full_time`
 - `listUsers()` only returns users with:
   - `show_in_cofounder_feed === true`
   - and enough profile signal to be meaningful
+- Co-founder cards now enrich user data with:
+  - `projectCount`
+  - `connectionCount`
+  - `signalRating`
+  - `isConnectedToViewer`
 
 Schema note:
 
 - `supabase/schema.sql` now includes `show_in_cofounder_feed boolean not null default false` on `User`
+- `supabase/schema.sql` now includes `availability text not null default 'not_specified'` on `User`
+- `supabase/schema.sql` now includes a `Connection` table for user-to-user connections
 - Existing Supabase projects may need the manual SQL:
   - `alter table public."User" add column if not exists show_in_cofounder_feed boolean not null default false;`
+  - `alter table public."User" add column if not exists availability text not null default 'not_specified';`
+  - create `public."Connection"` if the project predates connections
 
 ## API Compatibility Layer
 
@@ -316,6 +330,7 @@ Important exported functions include:
 - `getProjectsByUserEmail`
 - `searchProjects`
 - `createProjectForUser`
+- `createConnectionBetweenUsers`
 - `updateProjectById`
 - `updateUserSettingsByEmail`
 - `deleteProjectById`
@@ -327,6 +342,7 @@ Notes:
 - `User.name` is currently treated as a full-name field in the UI.
 - There is no separate surname / last-name column.
 - `User.hobbies` currently backs “passions, industries, and interests” in the UI.
+- `User.availability` stores marketplace availability, not project-level commitment.
 
 ## Schema Status
 
@@ -346,6 +362,7 @@ Supabase has two distinct groups of tables:
    - `Project`
    - `DevelopmentTool`
    - `Communication`
+   - `Connection`
 
 Both groups are required. Creating only the Better Auth tables is not enough for the app to function.
 
@@ -381,6 +398,7 @@ These are still valid follow-up areas:
 4. App Router auth protection is still mostly client-side.
 5. The settings/profile flows still contain substantial repetitive form logic.
 6. Project applications are still lightweight CTA-driven, not a full in-app application system.
+7. Co-founder credibility is currently a computed signal score, not a true review or endorsement system.
 
 ## Files Worth Reading First
 
