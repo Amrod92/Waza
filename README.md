@@ -2,51 +2,52 @@
 
 # Waza
 
-Waza is a startup co-founder discovery platform.
+Waza is a project matching platform for people who want to find someone to work with.
 
 It currently supports a two-sided flow:
 
-- founders can publish startup projects that need a co-founder
-- individuals can opt into a public co-founder marketplace and advertise themselves for the right startup
+- people can publish projects that need collaborators
+- individuals can opt into public people discovery and advertise themselves for the right project
 
-The product is intentionally lighter weight than a traditional startup network. The goal is to make fit easier to judge before the first serious conversation.
+The product is intentionally agnostic: a project can be a shop, startup, local initiative, creative idea, personal project, research effort, or anything else that benefits from the right person.
 
 ## Current Product Model
 
-Waza is no longer positioned as a generic collaboration tool for hobby or non-commercial projects.
+Waza is not limited to startups.
 
 The current direction is:
 
-- startup-focused
-- co-founder-oriented
+- project-focused
+- collaborator-oriented
 - technical and non-technical users welcome
 - profile signal and project clarity over volume
 
 Important caveat:
 
-- the UI speaks in startup / co-founder language
-- the Supabase schema still uses legacy table and field names like `Project`, `DevelopmentTool`, and `Communication`
+- the UI should speak in project / collaborator language
+- the Supabase schema still uses technical table names like `Project`, `DevelopmentTool`, and `Communication`
 
 ## Main Flows
 
 ### Projects
 
-`/projects` lists startup projects that are looking for a co-founder.
+`/projects` lists projects that are looking for collaborators.
 
 Users can:
 
-- browse startup briefs
+- browse project briefs
 - inspect stage, commitment, tags, and strengths sought
 - view project details
 - use the lightweight apply flow
+- use native product actions instead of public discussion threads
 
-### Co-Founders
+### People
 
-`/cofounders` lists individual profiles, not projects.
+`/collaborators` lists individual profiles, not projects.
 
 Users only appear there when they explicitly opt in from profile settings.
 
-Co-founder cards currently show:
+Profile cards currently show:
 
 - profile summary
 - strengths and interests
@@ -81,7 +82,7 @@ Co-founder cards currently show:
 
 ## Auth
 
-The app uses Better Auth with GitHub OAuth.
+The app uses Better Auth with Google OAuth.
 
 Key points:
 
@@ -138,11 +139,11 @@ These include:
 - `Communication`
 - `Connection`
 
-If your project was created before recent co-founder marketplace changes, make sure these columns exist on `public."User"`:
+If your project was created before recent people-discovery changes, make sure these columns exist on `public."User"`:
 
 ```sql
 alter table public."User"
-add column if not exists show_in_cofounder_feed boolean not null default false;
+add column if not exists show_in_collaborator_feed boolean not null default false;
 
 alter table public."User"
 add column if not exists availability text not null default 'not_specified';
@@ -202,8 +203,8 @@ BETTER_AUTH_SECRET=
 BETTER_AUTH_URL=
 NEXT_PUBLIC_APP_URL=
 
-GITHUB_ID=
-GITHUB_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 ```
 
 Important notes:
@@ -212,10 +213,10 @@ Important notes:
 - `BETTER_AUTH_URL` and `NEXT_PUBLIC_APP_URL` should match the exact dev origin you use in the browser
 - do not mix `localhost` and LAN IPs in the same auth flow
 
-GitHub OAuth callback URL must match the active origin, for example:
+Google OAuth callback URL must match the active origin, for example:
 
-- `http://localhost:3000/api/better-auth/callback/github`
-- or `http://192.168.0.55:3000/api/better-auth/callback/github`
+- `http://localhost:3000/api/better-auth/callback/google`
+- or `http://192.168.0.55:3000/api/better-auth/callback/google`
 
 ## Commands
 
@@ -263,13 +264,13 @@ It does not migrate Better Auth auth tables for you.
 
 ## Important Product Behaviors
 
-### Co-founder visibility is opt-in
+### People discovery visibility is opt-in
 
-Signing up does not automatically make a user visible on `/cofounders`.
+Signing up does not automatically make a user visible on `/collaborators`.
 
 That visibility is controlled by:
 
-- `User.show_in_cofounder_feed`
+- `User.show_in_collaborator_feed`
 
 Default:
 
@@ -277,7 +278,7 @@ Default:
 
 ### Availability is explicit
 
-Co-founder marketplace availability is stored on:
+People discovery availability is stored on:
 
 - `User.availability`
 
@@ -291,11 +292,23 @@ Current values include:
 
 ### Connections are stored
 
-The co-founder marketplace uses a real connection model:
+People discovery uses a real connection model:
 
 - connections are stored in `Connection`
-- connection count contributes to credibility / signal on co-founder cards
+- connection count contributes to credibility / signal on profile cards
 - duplicate connections between the same two users are prevented
+
+### Public discussion was removed
+
+Project detail pages no longer use GitHub comment threads or Giscus-style public discussion.
+
+Current intent:
+
+- `Apply` for project-side interest
+- `Connect` for profile-side interest
+- profile review before direct outreach
+
+This keeps interaction product-native and higher signal than open comment threads.
 
 ### Delete account removes auth too
 
@@ -314,7 +327,7 @@ Useful files to inspect first:
 
 - `app/page.jsx`
 - `app/projects/page.jsx`
-- `app/cofounders/page.jsx`
+- `app/collaborators/page.jsx`
 - `app/settings/page.jsx`
 - `app/user/[id]/page.jsx`
 - `utils/supabase-db.js`

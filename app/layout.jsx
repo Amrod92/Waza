@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Waza',
-  description: 'Find a co-founder for your startup or discover startup projects looking for the right partner.',
+  description: 'Find people to work with on shops, startups, personal projects, local ideas, creative work, and anything worth building together.',
 };
 
 export default function RootLayout({ children }) {

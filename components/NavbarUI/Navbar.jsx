@@ -28,8 +28,8 @@ const Navbar = () => {
       icon: Compass,
     },
     {
-      href: '/cofounders',
-      label: 'Co-Founders',
+      href: '/collaborators',
+      label: 'Collaborators',
       icon: Users,
     },
     {

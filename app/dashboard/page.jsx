@@ -75,7 +75,7 @@ function DashboardContent() {
           </div>
           <h1 className='text-4xl font-extrabold tracking-tight'>Personal Dashboard</h1>
           <p className='text-muted-foreground text-lg'>
-            Manage your co-founder profile and the startup briefs you have published.
+            Manage your public profile and the project briefs you have published.
           </p>
         </div>
         
@@ -92,7 +92,7 @@ function DashboardContent() {
           <CardHeader className='pb-2'>
             <CardTitle className='text-xl'>Your active projects</CardTitle>
             <CardDescription>
-              {data.length} project{data.length === 1 ? '' : 's'} currently visible to potential co-founders.
+              {data.length} project{data.length === 1 ? '' : 's'} currently visible to potential collaborators.
             </CardDescription>
           </CardHeader>
           <CardContent className='pt-6 space-y-6'>

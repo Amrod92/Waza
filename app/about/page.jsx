@@ -9,13 +9,13 @@ const principles = [
   {
     title: 'Project-First Signal',
     description:
-      'Waza is designed to help serious founders and future co-founders find each other faster, with less ambiguity and less noise.',
+      'Waza is designed to help people find the right person to work with, whether the goal is a shop, a startup, a local idea, or a personal project.',
     stat: '01',
   },
   {
     title: 'Complementary People',
     description:
-      'Good co-founder matching is rarely about identical backgrounds. It is about fit, shared motivation, and useful overlap.',
+      'Good collaboration is rarely about identical backgrounds. It is about fit, shared motivation, and useful overlap.',
     stat: '02',
   },
   {
@@ -31,19 +31,19 @@ const pillars = [
     eyebrow: 'Discovery',
     title: 'See what is real',
     description:
-      'Browse startup briefs that explain the idea, the stage, the co-founder need, and why the work matters.',
+      'Browse project briefs that explain the idea, the stage, the people needed, and why the work matters.',
   },
   {
     eyebrow: 'Positioning',
     title: 'Explain the gap',
     description:
-      'Profiles and listings are structured to show what you bring, what you need, and what kind of co-founder fits.',
+      'Profiles and listings are structured to show what you bring, what you need, and what kind of collaborator fits.',
   },
   {
     eyebrow: 'Momentum',
     title: 'Move to conversation',
     description:
-      'The goal is not passive browsing. The goal is enough trust and clarity to justify a first serious founder conversation.',
+      'The goal is not passive browsing. The goal is enough trust and clarity to justify a first serious conversation.',
   },
 ];
 
@@ -51,12 +51,12 @@ const processSteps = [
   {
     title: 'Define the Gap',
     description:
-      'Describe the startup, the stage, and the co-founder need with precision.',
+      'Describe the project, the stage, and the kind of person needed with precision.',
   },
   {
     title: 'Surface Proof',
     description:
-      'Provide strengths and context so potential co-founders can assess credibility immediately.',
+      'Provide strengths and context so potential collaborators can assess credibility immediately.',
   },
   {
     title: 'Evaluate Fit',
@@ -66,8 +66,8 @@ const processSteps = [
 ];
 
 const signals = [
-  'Clear co-founder intent instead of vague networking.',
-  'A two-sided flow for startup projects and co-founder profiles.',
+  'Clear collaboration intent instead of vague networking.',
+  'A two-sided flow for project briefs and people profiles.',
   'Better first conversations through stronger signal and context.',
 ];
 
@@ -93,7 +93,7 @@ export default function AboutPage() {
         <div className='space-y-32 md:space-y-40'>
           <section className='grid gap-14 lg:grid-cols-[minmax(0,1.15fr)_320px] lg:items-end'>
             <div className='space-y-10'>
-              <SectionLabel>The Craft of Co-Founder Matching</SectionLabel>
+              <SectionLabel>The Craft of Finding Fit</SectionLabel>
               <div className='space-y-12'>
                 <h1 className='text-7xl font-black leading-[0.85] tracking-[-0.05em] md:text-[120px]'>
                   Great things
@@ -103,9 +103,9 @@ export default function AboutPage() {
                   the right fit.
                 </h1>
                 <p className='max-w-2xl text-2xl font-medium leading-tight tracking-tight text-muted-foreground md:text-3xl'>
-                  Waza is where startup builders either publish a project that
-                  needs a co-founder or advertise themselves as the right
-                  person to join one.
+                  Waza is where people publish projects that need another
+                  person or advertise themselves as available for the right
+                  thing to build, open, study, or create.
                 </p>
                 <div className='flex flex-col gap-5 pt-2 sm:flex-row'>
                   <Link href='/projects'>
@@ -117,13 +117,13 @@ export default function AboutPage() {
                       <ArrowRight className='ml-2 h-5 w-5' />
                     </Button>
                   </Link>
-                  <Link href='/cofounders'>
+                  <Link href='/collaborators'>
                     <Button
                       variant='outline'
                       size='lg'
                       className='h-16 rounded-[24px] border-2 px-10 text-lg font-bold'
                     >
-                      Browse Co-Founders
+                      Browse People
                     </Button>
                   </Link>
                 </div>
@@ -148,11 +148,11 @@ export default function AboutPage() {
               <h2 className='text-5xl font-black leading-none tracking-tighter md:text-7xl'>
                 Beyond vague
                 <br />
-                founder networking.
+                generic networking.
               </h2>
               <p className='max-w-md text-xl font-medium leading-relaxed text-muted-foreground'>
                 Most platforms make introductions easy and evaluation hard.
-                Waza is built to make founder fit legible from the first look.
+                Waza is built to make working fit legible from the first look.
               </p>
             </div>
 
@@ -183,12 +183,12 @@ export default function AboutPage() {
               <div className='max-w-3xl space-y-6'>
                 <SectionLabel>How It Works</SectionLabel>
                 <h2 className='text-4xl font-black leading-tight tracking-tight md:text-6xl'>
-                  Co-founder matching works better when both sides can read the room.
+                  Finding the right person works better when both sides can read the room.
                 </h2>
               </div>
               <p className='text-lg leading-relaxed text-muted-foreground'>
                 The platform asks for enough context that both sides can judge
-                whether there is real startup alignment before outreach begins.
+                whether there is real alignment before outreach begins.
               </p>
             </div>
 
@@ -224,7 +224,7 @@ export default function AboutPage() {
                   The art of the impression.
                 </h2>
                 <p className='max-w-2xl text-lg leading-relaxed text-muted-foreground'>
-                  Stronger co-founder conversations start with clearer inputs.
+                  Stronger working conversations start with clearer inputs.
                   Waza is designed to make those inputs easier to understand at
                   a glance.
                 </p>
@@ -265,14 +265,14 @@ export default function AboutPage() {
                 </p>
                 <p className='text-base leading-relaxed text-muted-foreground'>
                   The product is intentionally lighter weight than a typical
-                  startup network. Less clutter, stronger signal, better fit.
+                  networking platform. Less clutter, stronger signal, better fit.
                 </p>
               </div>
             </div>
           </section>
 
           <section className='pt-8'>
-            <div className='relative overflow-hidden rounded-[48px] border border-border bg-zinc-950 px-8 py-12 text-primary-foreground md:px-14 md:py-16'>
+            <div className='relative overflow-hidden rounded-[48px] border border-border bg-zinc-950 px-8 py-12 text-white md:px-14 md:py-16'>
               <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_24%)]' />
               <div className='pointer-events-none absolute inset-0 bg-grid-zinc opacity-20 [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_100%)]' />
               <div className='absolute right-[-1rem] top-1/2 hidden -translate-y-1/2 text-[240px] font-black leading-none text-white/[0.05] md:block'>
@@ -283,13 +283,13 @@ export default function AboutPage() {
                 <div className='space-y-6'>
                   <SectionLabel inverted>Build With Intent</SectionLabel>
                   <h2 className='!text-white text-5xl font-black leading-[0.9] tracking-tighter md:text-7xl'>
-                    Find the co-founder
+                    Find the person
                     <br />
                     worth building with.
                   </h2>
                   <p className='max-w-2xl text-xl font-medium leading-relaxed text-white md:text-2xl'>
-                    Join Waza and start with clearer startup briefs, stronger
-                    co-founder signals, and better first conversations.
+                    Join Waza and start with clearer project briefs, stronger
+                    people signals, and better first conversations.
                   </p>
                 </div>
 
@@ -300,17 +300,17 @@ export default function AboutPage() {
                       variant='secondary'
                       className='h-14 w-full justify-between rounded-2xl px-6 text-base font-black'
                     >
-                      Browse Startup Projects
+                      Browse Projects
                       <ArrowRight className='h-5 w-5' />
                     </Button>
                   </Link>
-                  <Link href='/cofounders' className='w-full'>
+                  <Link href='/collaborators' className='w-full'>
                     <Button
                       size='lg'
                       variant='outline'
                       className='h-14 w-full justify-between rounded-2xl border-white/15 bg-white/10 px-6 text-base font-bold text-white hover:bg-white/20'
                     >
-                      Browse Co-Founders
+                      Browse People
                       <UserPlus className='h-5 w-5' />
                     </Button>
                   </Link>

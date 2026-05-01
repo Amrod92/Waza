@@ -80,7 +80,7 @@ const ProjectSkeleton = () => {
       <div className='mt-10'>
         <div className='grid grid-cols-1 md:grid-cols-2'>
           <div className='col-span-1 md:col-span-1'>
-            <h1 className='text-3xl md:text-3xl ml-5'>Co-Founder Match</h1>
+            <h1 className='text-3xl md:text-3xl ml-5'>Project Match</h1>
           </div>
           <div className='col-span-1 md:col-span-1 m-5'>
             <div className='grid justify-items-stretch'>

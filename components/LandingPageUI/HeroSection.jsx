@@ -15,19 +15,19 @@ function HeroSection({ scrollDown }) {
           {/* Floating Badge */}
           <div className='inline-flex items-center gap-2 rounded-full border glass px-4 py-2 text-sm font-semibold shadow-xl ring-1 ring-border animate-in fade-in slide-in-from-top-4 duration-1000'>
             <div className='h-2 w-2 rounded-full bg-emerald-500 animate-pulse' />
-            <span className='text-muted-foreground'>Now live for startup projects and co-founder discovery</span>
+            <span className='text-muted-foreground'>Now live for people who want to start things together</span>
           </div>
 
           {/* Main Title */}
           <div className='max-w-5xl space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000'>
             <h1 className='text-6xl font-black tracking-tight lg:text-8xl leading-[0.9] text-gradient'>
-              Find a co-founder, <br />
-              or join the right startup.
+              Find someone to work with, <br />
+              then start the thing.
             </h1>
             <p className='mx-auto max-w-2xl text-xl text-muted-foreground leading-relaxed md:text-2xl font-medium'>
-              Waza is a two-sided startup network: browse projects that need a
-              co-founder, or advertise yourself as someone looking for the
-              right startup to join.
+              Waza helps people find collaborators for shops, startups,
+              personal projects, local ideas, creative work, and anything that
+              is easier to begin with the right person.
             </p>
           </div>
 
@@ -39,13 +39,13 @@ function HeroSection({ scrollDown }) {
                 <ArrowRight className='ml-2 h-5 w-5' />
               </Button>
             </Link>
-            <Link href='/cofounders'>
+            <Link href='/collaborators'>
               <Button
                 variant='outline'
                 size='lg'
                 className='px-10 h-14 text-lg font-bold rounded-2xl glass hover:bg-muted/50 transition-all'
               >
-                Find Co-Founders
+                Find People
               </Button>
             </Link>
           </div>
@@ -57,10 +57,10 @@ function HeroSection({ scrollDown }) {
                 <Users className='h-6 w-6' />
               </div>
               <div className='pt-4'>
-                <h3 className='text-xl font-bold mb-3'>Co-Founders</h3>
+                <h3 className='text-xl font-bold mb-3'>People</h3>
                 <p className='text-muted-foreground leading-relaxed'>
-                  Discover technical and non-technical people who are actively
-                  looking for the right startup to join.
+                  Discover people who are actively open to working on the right
+                  idea, business, project, or local initiative.
                 </p>
               </div>
             </div>
@@ -72,8 +72,8 @@ function HeroSection({ scrollDown }) {
               <div className='pt-4'>
                 <h3 className='text-xl font-bold mb-3'>Project Discovery</h3>
                 <p className='text-muted-foreground leading-relaxed'>
-                  Browse startup briefs by stage, commitment, and role gap to
-                  find projects that are genuinely worth joining.
+                  Browse projects by theme, commitment, stage, and what kind of
+                  help is needed.
                 </p>
               </div>
             </div>
@@ -86,7 +86,7 @@ function HeroSection({ scrollDown }) {
                 <h3 className='text-xl font-bold mb-3'>Clear Next Step</h3>
                 <p className='text-muted-foreground leading-relaxed'>
                   Make the fit obvious early, then move directly into an
-                  application or co-founder conversation.
+                  application, connection, or first working conversation.
                 </p>
               </div>
             </div>

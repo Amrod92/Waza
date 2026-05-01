@@ -16,6 +16,11 @@ module.exports = {
     },
     extend: {
       colors: {
+        zinc: {
+          800: '#3a3731',
+          900: '#2d2a25',
+          950: '#24211d',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

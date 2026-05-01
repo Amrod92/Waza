@@ -9,12 +9,12 @@ const quotes = [
   },
   {
     quote:
-      'A good co-founder product reduces ambiguity: what is being built, what kind of partner is needed, and why this person is credible.',
+      'A good matching product reduces ambiguity: what is being built, what kind of person is needed, and why this person is credible.',
     role: 'Design principle',
   },
   {
     quote:
-      'The best founder networks make serious co-founders easier to find before introductions feel transactional.',
+      'The best project networks make serious collaborators easier to find before introductions feel transactional.',
     role: 'Product goal',
   },
 ];

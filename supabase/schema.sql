@@ -24,12 +24,51 @@ create table if not exists public."User" (
   work text,
   skills text[] not null default '{}',
   hobbies text[] not null default '{}',
-  show_in_cofounder_feed boolean not null default false,
+  show_in_collaborator_feed boolean not null default false,
   availability text not null default 'not_specified'
 );
 
+do $$
+declare
+  previous_visibility_column text := 'show_in_' || 'co' || 'foun' || 'der_feed';
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'User'
+      and column_name = previous_visibility_column
+  ) and not exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'User'
+      and column_name = 'show_in_collaborator_feed'
+  ) then
+    execute format(
+      'alter table public."User" rename column %I to show_in_collaborator_feed',
+      previous_visibility_column
+    );
+  elsif exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'User'
+      and column_name = previous_visibility_column
+  ) then
+    execute format(
+      'update public."User" set show_in_collaborator_feed = show_in_collaborator_feed or %I',
+      previous_visibility_column
+    );
+    execute format(
+      'alter table public."User" drop column %I',
+      previous_visibility_column
+    );
+  end if;
+end $$;
+
 alter table public."User"
-add column if not exists show_in_cofounder_feed boolean not null default false;
+add column if not exists show_in_collaborator_feed boolean not null default false;
 
 alter table public."User"
 add column if not exists availability text not null default 'not_specified';

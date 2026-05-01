@@ -13,6 +13,6 @@ export default async function main(req, res) {
     console.error('Issue with getAllUsers: ', err);
     return res
       .status(500)
-      .json({ error: 'Unable to load co-founder profiles at this time.' });
+      .json({ error: 'Unable to load collaborator profiles at this time.' });
   }
 }

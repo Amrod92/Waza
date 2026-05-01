@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { 
   ArrowLeft, 
@@ -65,6 +65,21 @@ const DIFFICULTY_OPTIONS = [
 
 const titleCase = value => value?.replace(/\b\w/g, char => char.toUpperCase());
 
+const buildProjectFormData = data => ({
+  title: data.title,
+  description: data.description,
+  teamNeed: data.team_need,
+  discord: data.communication?.[0]?.discord || '',
+  twitch: data.communication?.[0]?.twitch || '',
+  twitter: data.communication?.[0]?.twitter || '',
+  slack: data.communication?.[0]?.slack || '',
+  github: data.developmentTool?.[0]?.github || '',
+  jira: data.developmentTool?.[0]?.jira || '',
+  figma: data.developmentTool?.[0]?.figma || '',
+  trello: data.developmentTool?.[0]?.trello || '',
+  notion: data.developmentTool?.[0]?.notion || '',
+});
+
 function SectionHeading({ eyebrow, title, description }) {
   return (
     <div className='space-y-2'>
@@ -116,36 +131,13 @@ function UpdateProjectContent() {
     enabled: !!id,
   });
 
-  const [developmentStatus, setDevelopmentStatus] = useState('');
-  const [difficulty, setDifficulty] = useState('');
-
-  // Initializing these from data once loaded
+  const [developmentStatus, setDevelopmentStatus] = useState(null);
+  const [difficulty, setDifficulty] = useState(null);
   const [formData, setFormData] = useState(null);
-
-  useMemo(() => {
-    if (data && !formData) {
-      setFormData({
-        title: data.title,
-        description: data.description,
-        teamNeed: data.team_need,
-        discord: data.communication?.[0]?.discord || '',
-        twitch: data.communication?.[0]?.twitch || '',
-        twitter: data.communication?.[0]?.twitter || '',
-        slack: data.communication?.[0]?.slack || '',
-        github: data.developmentTool?.[0]?.github || '',
-        jira: data.developmentTool?.[0]?.jira || '',
-        figma: data.developmentTool?.[0]?.figma || '',
-        trello: data.developmentTool?.[0]?.trello || '',
-        notion: data.developmentTool?.[0]?.notion || '',
-      });
-      setDevelopmentStatus(data.development_status);
-      setDifficulty(data.difficulty_level);
-    }
-  }, [data]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...(prev || buildProjectFormData(data)), [name]: value }));
   };
 
   const handleSubmit = async event => {
@@ -154,9 +146,9 @@ function UpdateProjectContent() {
       method: 'PUT',
       body: JSON.stringify({
         id,
-        ...formData,
-        developmentStatus,
-        difficulty,
+        ...currentFormData,
+        developmentStatus: currentDevelopmentStatus,
+        difficulty: currentDifficulty,
         communicationId: data.communication?.[0]?.id,
         devToolsId: data.developmentTool?.[0]?.id,
       }),
@@ -167,10 +159,14 @@ function UpdateProjectContent() {
     if (responseData) router.push(`/projects/${responseData.id}`);
   };
 
-  if (isLoading || !formData) return <div className='min-h-screen flex items-center justify-center bg-zinc-50'><LoadingSpinner /></div>;
+  if (isLoading) return <div className='min-h-screen flex items-center justify-center bg-zinc-50'><LoadingSpinner /></div>;
   if (isError) return <div className='container mx-auto py-20 text-center text-red-500'>Error: {error.message}</div>;
+  if (!id || !data) return null;
 
-  const isFormValid = formData.title && formData.description && developmentStatus && difficulty && formData.github;
+  const currentFormData = formData || buildProjectFormData(data);
+  const currentDevelopmentStatus = developmentStatus ?? data.development_status;
+  const currentDifficulty = difficulty ?? data.difficulty_level;
+  const isFormValid = currentFormData.title && currentFormData.description && currentDevelopmentStatus && currentDifficulty && currentFormData.github;
 
   return (
     <div className='relative overflow-hidden bg-zinc-50 text-zinc-950 pb-20'>
@@ -199,11 +195,11 @@ function UpdateProjectContent() {
                   Edit Mode
                 </p>
                 <h1 className='text-4xl font-black tracking-[-0.05em] text-zinc-950 md:text-6xl'>
-                  Refine your venture brief.
+                  Refine your project brief.
                 </h1>
                 <p className='max-w-3xl text-base leading-8 text-zinc-600 md:text-lg'>
-                  Keep your co-founder search active by updating your stage, 
-                  commitment needs, and recent proof of work.
+                  Keep your search active by updating your stage, commitment
+                  needs, and recent proof of work.
                 </p>
               </div>
             </div>
@@ -223,7 +219,7 @@ function UpdateProjectContent() {
                         <label className='text-sm font-bold text-zinc-800'>Project title</label>
                         <Input
                           name='title'
-                          value={formData.title}
+                          value={currentFormData.title}
                           onChange={handleChange}
                           required
                           className='h-12 rounded-2xl border-zinc-300 bg-white text-zinc-950'
@@ -233,7 +229,7 @@ function UpdateProjectContent() {
                         <label className='text-sm font-bold text-zinc-800'>Detailed description</label>
                         <Textarea
                           name='description'
-                          value={formData.description}
+                          value={currentFormData.description}
                           onChange={handleChange}
                           rows={8}
                           required
@@ -250,12 +246,12 @@ function UpdateProjectContent() {
                     <SectionHeading
                       eyebrow='Project Maturity'
                       title='Stage & Commitment'
-                      description='Update how far along you are and what you expect from a partner.'
+                      description='Update how far along you are and what you expect from a collaborator.'
                     />
                     <div className='grid gap-6 md:grid-cols-2'>
                       <div className='space-y-2.5'>
                         <label className='text-sm font-bold text-zinc-800'>Current stage</label>
-                        <Select value={developmentStatus} onValueChange={setDevelopmentStatus}>
+                        <Select value={currentDevelopmentStatus} onValueChange={setDevelopmentStatus}>
                           <SelectTrigger className='h-12 rounded-2xl border-zinc-300 bg-zinc-50'>
                             <SelectValue />
                           </SelectTrigger>
@@ -268,7 +264,7 @@ function UpdateProjectContent() {
                       </div>
                       <div className='space-y-2.5'>
                         <label className='text-sm font-bold text-zinc-800'>Time commitment</label>
-                        <Select value={difficulty} onValueChange={setDifficulty}>
+                        <Select value={currentDifficulty} onValueChange={setDifficulty}>
                           <SelectTrigger className='h-12 rounded-2xl border-zinc-300 bg-zinc-50'>
                             <SelectValue />
                           </SelectTrigger>
@@ -280,11 +276,11 @@ function UpdateProjectContent() {
                         </Select>
                       </div>
                       <div className='space-y-2.5'>
-                        <label className='text-sm font-bold text-zinc-800'>Co-founders wanted</label>
+                        <label className='text-sm font-bold text-zinc-800'>Collaborators wanted</label>
                         <Input
                           type='number'
                           name='teamNeed'
-                          value={formData.teamNeed}
+                          value={currentFormData.teamNeed}
                           onChange={handleChange}
                           min='0'
                           className='h-12 rounded-2xl border-zinc-300 bg-zinc-50'
@@ -304,10 +300,10 @@ function UpdateProjectContent() {
                         description='Where can people find you?'
                       />
                       <div className='space-y-4'>
-                        <LinkField icon={SiDiscord} iconClassName='text-[#5865F2]' label='Discord' name='discord' value={formData.discord} onChange={handleChange} />
-                        <LinkField icon={SiSlack} iconClassName='text-[#4A154B]' label='Slack' name='slack' value={formData.slack} onChange={handleChange} />
-                        <LinkField icon={SiX} iconClassName='text-zinc-950' label='X' name='twitter' value={formData.twitter} onChange={handleChange} />
-                        <LinkField icon={SiTwitch} iconClassName='text-[#9146FF]' label='Twitch' name='twitch' value={formData.twitch} onChange={handleChange} />
+                        <LinkField icon={SiDiscord} iconClassName='text-[#5865F2]' label='Discord' name='discord' value={currentFormData.discord} onChange={handleChange} />
+                        <LinkField icon={SiSlack} iconClassName='text-[#4A154B]' label='Slack' name='slack' value={currentFormData.slack} onChange={handleChange} />
+                        <LinkField icon={SiX} iconClassName='text-zinc-950' label='X' name='twitter' value={currentFormData.twitter} onChange={handleChange} />
+                        <LinkField icon={SiTwitch} iconClassName='text-[#9146FF]' label='Twitch' name='twitch' value={currentFormData.twitch} onChange={handleChange} />
                       </div>
                     </div>
                     <div className='space-y-8'>
@@ -317,10 +313,10 @@ function UpdateProjectContent() {
                         description='Show, dont just tell.'
                       />
                       <div className='space-y-4'>
-                        <LinkField icon={SiGithub} iconClassName='text-zinc-950' label='GitHub' name='github' value={formData.github} onChange={handleChange} required />
-                        <LinkField icon={SiFigma} iconClassName='text-[#F24E1E]' label='Figma' name='figma' value={formData.figma} onChange={handleChange} />
-                        <LinkField icon={SiJira} iconClassName='text-[#0052CC]' label='Jira' name='jira' value={formData.jira} onChange={handleChange} />
-                        <LinkField icon={SiNotion} iconClassName='text-zinc-950' label='Notion' name='notion' value={formData.notion} onChange={handleChange} />
+                        <LinkField icon={SiGithub} iconClassName='text-zinc-950' label='GitHub' name='github' value={currentFormData.github} onChange={handleChange} required />
+                        <LinkField icon={SiFigma} iconClassName='text-[#F24E1E]' label='Figma' name='figma' value={currentFormData.figma} onChange={handleChange} />
+                        <LinkField icon={SiJira} iconClassName='text-[#0052CC]' label='Jira' name='jira' value={currentFormData.jira} onChange={handleChange} />
+                        <LinkField icon={SiNotion} iconClassName='text-zinc-950' label='Notion' name='notion' value={currentFormData.notion} onChange={handleChange} />
                       </div>
                     </div>
                   </div>
@@ -331,13 +327,13 @@ function UpdateProjectContent() {
                 <div className='rounded-[32px] bg-zinc-950 p-6 text-white shadow-2xl space-y-6'>
                   <div className='space-y-2'>
                     <p className='text-[10px] font-black uppercase tracking-widest text-white/40'>Quick Preview</p>
-                    <h3 className='text-2xl font-black leading-tight'>{formData.title || 'Untitled'}</h3>
+                    <h3 className='text-2xl font-black leading-tight'>{currentFormData.title || 'Untitled'}</h3>
                     <div className='pt-2 flex flex-wrap gap-2'>
-                      <Badge variant='outline' className='border-white/10 bg-white/5 text-white/80 text-[10px] uppercase font-black px-2 py-0.5'>{developmentStatus}</Badge>
-                      <Badge variant='outline' className='border-white/10 bg-white/5 text-white/80 text-[10px] uppercase font-black px-2 py-0.5'>{difficulty}</Badge>
+                      <Badge variant='outline' className='border-white/10 bg-white/5 text-white/80 text-[10px] uppercase font-black px-2 py-0.5'>{currentDevelopmentStatus}</Badge>
+                      <Badge variant='outline' className='border-white/10 bg-white/5 text-white/80 text-[10px] uppercase font-black px-2 py-0.5'>{currentDifficulty}</Badge>
                     </div>
                   </div>
-                  <p className='text-sm text-white/60 leading-relaxed line-clamp-4 italic'>"{formData.description}"</p>
+                  <p className='text-sm text-white/60 leading-relaxed line-clamp-4 italic'>"{currentFormData.description}"</p>
                 </div>
 
                 <Card className='rounded-[32px] border-zinc-200 p-6 space-y-6 shadow-sm'>
@@ -347,9 +343,9 @@ function UpdateProjectContent() {
                   </div>
                   <div className='space-y-3'>
                     {[
-                      ['Title', !!formData.title],
-                      ['Summary', !!formData.description],
-                      ['GitHub Proof', !!formData.github],
+                      ['Title', !!currentFormData.title],
+                      ['Summary', !!currentFormData.description],
+                      ['GitHub Proof', !!currentFormData.github],
                     ].map(([label, ok]) => (
                       <div key={label} className='flex items-center gap-3 text-sm'>
                         <div className={`h-5 w-5 rounded-full flex items-center justify-center ${ok ? 'bg-zinc-950 text-white' : 'bg-zinc-100 text-zinc-300'}`}>

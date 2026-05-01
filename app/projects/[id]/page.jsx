@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
-import Giscus from '@giscus/react';
 import { 
   Calendar, 
   Clock, 
@@ -161,7 +160,7 @@ export default function ProjectPage() {
           <div className='space-y-6'>
             <div className='flex flex-wrap gap-2.5'>
               <Badge variant='outline' className='rounded-full border-zinc-200 bg-zinc-950 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg'>
-                Venture Brief
+                Project Brief
               </Badge>
               {data.tags.map(tag => (
                 <Badge key={tag} variant='outline' className='rounded-full border-zinc-200 bg-white/50 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 backdrop-blur-sm'>
@@ -212,7 +211,7 @@ export default function ProjectPage() {
               <Card className='rounded-[40px] border-zinc-200 bg-zinc-50/50 p-8 space-y-6'>
                 <div className='flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400'>
                   <Users className='h-4 w-4' />
-                  Co-founder Strengths
+                  Collaborator Strengths
                 </div>
                 {data.skills.length === 0 ? (
                   <p className='text-sm text-zinc-400 italic'>No specific strengths stated</p>
@@ -229,25 +228,83 @@ export default function ProjectPage() {
             <section className='space-y-6'>
               <div className='flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400'>
                 <MessageSquare className='h-4 w-4' />
-                Discussion & Feedback
+                Applications & Introductions
               </div>
-              <div className='bg-white rounded-[40px] border border-zinc-200 p-8 md:p-12 shadow-sm'>
-                <Giscus
-                  id='comments'
-                  repo='Amrod92/Waza'
-                  repoId='R_kgDOH6dOqQ'
-                  category='Comments'
-                  categoryId='DIC_kwDOH6dOqc4CTWDK'
-                  mapping='pathname'
-                  strict='0'
-                  reactionsEnabled='1'
-                  emitMetadata='0'
-                  inputPosition='top'
-                  theme='light'
-                  lang='en'
-                  loading='lazy'
-                />
-              </div>
+              <Card className='rounded-[40px] border-zinc-200 bg-white shadow-sm'>
+                <CardContent className='p-8 md:p-12'>
+                  <div className='grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]'>
+                    <div className='space-y-6'>
+                      <div className='space-y-3'>
+                        <h3 className='text-2xl font-black tracking-tight text-zinc-950'>
+                          Use direct product actions instead of public comments.
+                        </h3>
+                        <p className='max-w-2xl text-base leading-8 text-zinc-600'>
+                          Waza is designed for serious project introductions, not
+                          open comment threads. If you think there is a fit,
+                          apply to this project directly or review the owner
+                          profile before reaching out.
+                        </p>
+                      </div>
+
+                      <div className='grid gap-4 md:grid-cols-2'>
+                        <div className='rounded-[28px] border border-zinc-200 bg-zinc-50 p-5'>
+                          <p className='text-[10px] font-black uppercase tracking-[0.22em] text-zinc-400'>
+                            Best next step
+                          </p>
+                          <h4 className='mt-3 text-lg font-black tracking-tight text-zinc-950'>
+                            Apply if the fit is real
+                          </h4>
+                          <p className='mt-2 text-sm leading-7 text-zinc-600'>
+                            Reach out when you can clearly explain why your
+                            timing, strengths, and interests fit this project.
+                          </p>
+                        </div>
+
+                        <div className='rounded-[28px] border border-zinc-200 bg-zinc-50 p-5'>
+                          <p className='text-[10px] font-black uppercase tracking-[0.22em] text-zinc-400'>
+                            Before you message
+                          </p>
+                          <h4 className='mt-3 text-lg font-black tracking-tight text-zinc-950'>
+                            Read the person signal
+                          </h4>
+                          <p className='mt-2 text-sm leading-7 text-zinc-600'>
+                            Review the profile, proof links, and project
+                            context first so the introduction starts at a
+                            higher level.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className='space-y-4 rounded-[32px] border border-zinc-200 bg-zinc-50 p-5'>
+                      <p className='text-[10px] font-black uppercase tracking-[0.22em] text-zinc-400'>
+                        Native actions
+                      </p>
+                      {applyHref ? (
+                        <a href={applyHref} className='block'>
+                          <Button className='h-12 w-full rounded-2xl bg-zinc-950 text-sm font-black text-white hover:bg-zinc-800'>
+                            <Send className='h-4 w-4' />
+                            Apply to this project
+                          </Button>
+                        </a>
+                      ) : null}
+                      <Link href={`/user/${data.userId}`} className='block'>
+                        <Button
+                          variant='outline'
+                          className='h-12 w-full rounded-2xl border-zinc-200 bg-white text-sm font-black text-zinc-900 hover:bg-zinc-100'
+                        >
+                          View profile
+                          <ChevronRight className='h-4 w-4' />
+                        </Button>
+                      </Link>
+                      <p className='text-xs leading-6 text-zinc-500'>
+                        Public discussion has been removed here on purpose. The
+                        goal is better introductions, not noisy comment threads.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </section>
           </div>
 
@@ -268,7 +325,7 @@ export default function ProjectPage() {
                     <Link href={`/user/${data.userId}`} className='text-lg font-black tracking-tight text-zinc-950 hover:underline'>
                       {data.user.name}
                     </Link>
-                    <p className='text-xs font-medium text-zinc-500 line-clamp-1'>{data.user.short_bio || 'Founder'}</p>
+                    <p className='text-xs font-medium text-zinc-500 line-clamp-1'>{data.user.short_bio || 'Project owner'}</p>
                   </div>
                 </div>
               </CardHeader>
@@ -312,13 +369,13 @@ export default function ProjectPage() {
                       <Users className='h-4 w-4' />
                       <span>Open roles</span>
                     </div>
-                    <span className='text-zinc-950 font-bold'>{data.team_need || '1'} co-founder</span>
+                    <span className='text-zinc-950 font-bold'>{data.team_need || '1'} collaborator</span>
                   </div>
                 </div>
 
                 <div className='pt-8 border-t border-zinc-100 space-y-6'>
                   <div className='flex items-center justify-between'>
-                    <span className='text-[10px] font-black uppercase tracking-widest text-zinc-400'>Venture Stage</span>
+                    <span className='text-[10px] font-black uppercase tracking-widest text-zinc-400'>Project Stage</span>
                     <Badge 
                       variant={isCancelled ? 'destructive' : 'outline'}
                       className={`rounded-lg px-2.5 py-1 text-xs font-bold capitalize ${!isCancelled && 'border-emerald-500/20 bg-emerald-50 text-emerald-600'}`}

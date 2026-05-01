@@ -214,14 +214,14 @@ function SettingsContent() {
   const currentSkills = skills.length > 0 ? skills : data.skills || [];
   const currentHobbies = hobbies.length > 0 ? hobbies : data.hobbies || [];
   const socialLinkCount = socialFields.filter(f => socialForm[f.key]?.trim()).length;
-  const marketVisibility = marketVisibilityDraft ?? Boolean(data.show_in_cofounder_feed);
+  const marketVisibility = marketVisibilityDraft ?? Boolean(data.show_in_collaborator_feed);
   const availabilityDraft = profileInfoDraft?.availability ?? data.availability ?? 'not_specified';
 
   const isUserSectionFormDirty = profileInfoForm.name !== (data.name || '') || profileInfoForm.short_bio !== (data.short_bio || '');
   const isAboutMeFormDirty = profileInfoForm.bio !== (data.bio || '');
   const isEducationFormDirty = educationForm !== (data.education || '');
   const isWorkHistoryFormDirty = workHistoryForm !== (data.work || '');
-  const isMarketVisibilityDirty = marketVisibility !== Boolean(data.show_in_cofounder_feed) || availabilityDraft !== (data.availability || 'not_specified');
+  const isMarketVisibilityDirty = marketVisibility !== Boolean(data.show_in_collaborator_feed) || availabilityDraft !== (data.availability || 'not_specified');
   const isSocialFormDirty = Object.keys(socialForm).some(k => socialForm[k] !== (data.userSocialProfile?.[0]?.[k] || '')) || Object.keys(socialForm).length !== Object.keys(data.userSocialProfile?.[0] || {}).length;
 
   const profileCompletionChecks = [
@@ -237,7 +237,7 @@ function SettingsContent() {
   const onMarketVisibilitySubmit = event => {
     event.preventDefault();
     mutation.mutate({
-      show_in_cofounder_feed: marketVisibility,
+      show_in_collaborator_feed: marketVisibility,
       availability: availabilityDraft,
     });
   };
@@ -330,11 +330,12 @@ function SettingsContent() {
               </Badge>
               <div className='space-y-4'>
                 <h1 className='text-balance text-5xl font-black tracking-[-0.06em] text-zinc-950 md:text-7xl'>
-                  Refine your <span className='text-zinc-400'>founder signal.</span>
+                  Refine your <span className='text-zinc-400'>collaborator signal.</span>
                 </h1>
                 <p className='max-w-2xl text-lg leading-relaxed text-zinc-600 md:text-xl'>
-                  Maintain an accurate profile to ensure you attract co-founders 
-                  with complementary strengths and aligned commitment levels.
+                  Maintain an accurate profile so people can understand what
+                  you bring, what you like working on, and when you are
+                  available.
                 </p>
               </div>
             </div>
@@ -420,8 +421,8 @@ function SettingsContent() {
                     <div className='flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-10'>
                       <SectionHeading
                         eyebrow='Visibility'
-                        title='Marketplace Presence'
-                        description='Control how you appear in the co-founder discovery feed.'
+                        title='Discovery Presence'
+                        description='Control how you appear in the people discovery feed.'
                       />
                       <SaveActions
                         isDirty={isMarketVisibilityDirty}
@@ -472,7 +473,7 @@ function SettingsContent() {
                           <div className='space-y-1'>
                             <p className='font-black uppercase tracking-widest text-xs'>Publicly Available</p>
                             <p className={`text-xs leading-relaxed font-medium ${marketVisibility ? 'text-white/60' : 'text-zinc-400'}`}>
-                              Visible in co-founder discovery. Ready to receive inbound interest from partners.
+                              Visible in people discovery. Ready to receive inbound interest from potential collaborators.
                             </p>
                           </div>
                         </div>
@@ -546,7 +547,7 @@ function SettingsContent() {
                       <SectionHeading
                         eyebrow='Bio'
                         title='Personal Summary'
-                        description='A concise description of how you think and what kind of partner dynamic you prefer.'
+                        description='A concise description of how you think and what kind of working dynamic you prefer.'
                       />
                       <SaveActions
                         isDirty={isAboutMeFormDirty}
@@ -560,7 +561,7 @@ function SettingsContent() {
                         value={profileInfoForm.bio}
                         onChange={e => setProfileInfoDraft(prev => ({ ...(prev || profileInfoForm), bio: e.target.value }))}
                         className='rounded-2xl border-zinc-300 bg-white text-base leading-relaxed text-zinc-900 focus-visible:ring-zinc-950 p-6'
-                        placeholder='Share your background, motivation, and what kind of partner you work well with...'
+                        placeholder='Share your background, motivation, and what kind of people you work well with...'
                       />
                     </div>
                   </form>
@@ -701,7 +702,7 @@ function SettingsContent() {
                         <DialogDescription className='text-zinc-500'>This action is permanent and irreversible.</DialogDescription>
                       </DialogHeader>
                       <p className='text-sm leading-relaxed text-zinc-600 py-4'>
-                        Are you sure you want to delete your account? You will lose access to your projects, profile data, and all founder signals.
+                        Are you sure you want to delete your account? You will lose access to your projects, profile data, and all public signals.
                       </p>
                       <DialogFooter className='gap-3'>
                         <Button variant='outline' onClick={() => setIsOpen(false)} className='rounded-2xl'>Keep Account</Button>

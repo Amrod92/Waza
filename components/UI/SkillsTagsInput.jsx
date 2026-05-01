@@ -29,7 +29,7 @@ const SkillsTagsInput = ({ skills, setSkills, setSkillsValid }) => {
   return (
     <div className='relative z-0 w-full space-y-3'>
       <label htmlFor='skills-tags' className='text-sm font-semibold tracking-tight text-zinc-900'>
-        Ideal co-founder strengths
+        Ideal collaborator strengths
       </label>
       <div className='space-y-2'>
         <Input

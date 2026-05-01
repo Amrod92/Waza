@@ -356,7 +356,7 @@ export async function listUsers(options = {}) {
   // Keep the discovery page focused on profiles with some real signal.
   return enrichedUsers.filter(
     user =>
-      user.show_in_cofounder_feed === true &&
+      user.show_in_collaborator_feed === true &&
       (user.name ||
         user.short_bio ||
         user.bio ||
@@ -369,7 +369,7 @@ export async function createConnectionBetweenUsers(viewerEmail, targetUserId) {
   const viewer = await getUserByEmail(viewerEmail);
 
   if (!viewer?.id) {
-    throw new Error('You must be signed in to connect with a co-founder.');
+    throw new Error('You must be signed in to connect with a collaborator.');
   }
 
   if (!targetUserId) {
@@ -383,7 +383,7 @@ export async function createConnectionBetweenUsers(viewerEmail, targetUserId) {
   const target = await getUserById(targetUserId);
 
   if (!target) {
-    throw new Error('The selected co-founder profile does not exist.');
+    throw new Error('The selected collaborator profile does not exist.');
   }
 
   const [userAId, userBId] = [viewer.id, targetUserId].sort();
@@ -681,8 +681,8 @@ export async function updateUserSettingsByEmail(email, data) {
     userUpdates.hobbies = asArray(data.hobbies);
   }
 
-  if (Object.prototype.hasOwnProperty.call(data, 'show_in_cofounder_feed')) {
-    userUpdates.show_in_cofounder_feed = Boolean(data.show_in_cofounder_feed);
+  if (Object.prototype.hasOwnProperty.call(data, 'show_in_collaborator_feed')) {
+    userUpdates.show_in_collaborator_feed = Boolean(data.show_in_collaborator_feed);
   }
 
   if (Object.prototype.hasOwnProperty.call(data, 'availability')) {

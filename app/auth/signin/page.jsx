@@ -1,6 +1,6 @@
 'use client';
 
-import { SiGithub } from 'react-icons/si';
+import { SiGoogle } from 'react-icons/si';
 import { Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
@@ -31,8 +31,9 @@ export default function SignInPage() {
                 Build with the <br /> right people.
               </h1>
               <p className='text-xl text-muted-foreground leading-relaxed max-w-md'>
-                Join the startup network for people looking for a co-founder or
-                looking for the right startup project to join.
+                Join the project network for people looking for someone to work
+                with on a shop, startup, personal project, local idea, or
+                creative project.
               </p>
             </div>
 
@@ -43,7 +44,7 @@ export default function SignInPage() {
               </div>
               <div className='flex items-center gap-3 text-sm font-medium p-4 rounded-2xl bg-card border shadow-sm w-fit'>
                 <Sparkles className='h-5 w-5 text-primary' />
-                Access startup projects and co-founder profiles
+                Access projects and collaborator profiles
               </div>
             </div>
           </div>
@@ -66,7 +67,7 @@ export default function SignInPage() {
                   <Button
                     onClick={() =>
                       betterAuthClient.signIn.social({
-                        provider: 'github',
+                        provider: 'google',
                         callbackURL: '/dashboard',
                       })
                     }
@@ -74,8 +75,8 @@ export default function SignInPage() {
                     size='lg'
                     className='w-full h-16 text-lg font-bold rounded-2xl border-2 hover:bg-muted/50 transition-all flex items-center justify-center gap-3 group'
                   >
-                    <SiGithub className='h-6 w-6' />
-                    Continue with GitHub
+                    <SiGoogle className='h-6 w-6' />
+                    Continue with Google
                     <ArrowRight className='h-5 w-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all' />
                   </Button>
                 </div>
@@ -83,7 +84,7 @@ export default function SignInPage() {
                 <div className='pt-6 border-t'>
                   <p className='text-center text-sm text-muted-foreground leading-relaxed'>
                     By signing in, you agree to our community standards and
-                    commitment to serious founder conversations.
+                    commitment to serious working conversations.
                   </p>
                 </div>
               </CardContent>

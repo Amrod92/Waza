@@ -18,7 +18,7 @@ export default function ProjectCard({ prj }) {
     <Card className='group overflow-hidden rounded-[32px] border-zinc-200/80 bg-white shadow-[0_18px_60px_-42px_rgba(24,24,27,0.25)] transition-all duration-300 hover:border-zinc-300 hover:shadow-[0_28px_90px_-50px_rgba(24,24,27,0.32)]'>
       <CardContent className='p-0'>
         <div className='grid gap-0 md:grid-cols-[240px_minmax(0,1fr)]'>
-          {/* Sidebar / Founder Info */}
+          {/* Sidebar / owner info */}
           <div className='border-b border-zinc-100 bg-zinc-50/50 p-6 md:border-b-0 md:border-r'>
             <div className='flex flex-col h-full justify-between gap-6'>
               <div className='space-y-4'>
@@ -33,7 +33,7 @@ export default function ProjectCard({ prj }) {
                     {prj.user.name}
                   </Link>
                   <p className='text-xs font-medium leading-relaxed text-zinc-500 line-clamp-2'>
-                    {prj.user.short_bio || 'Founder'}
+                    {prj.user.short_bio || 'Project owner'}
                   </p>
                 </div>
               </div>
@@ -50,7 +50,7 @@ export default function ProjectCard({ prj }) {
                 </div>
                 <div className='flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-widest text-zinc-400'>
                   <Users className='h-3.5 w-3.5' />
-                  <span>{prj.team_need || '1'} co-founder{prj.team_need === 1 ? '' : 's'}</span>
+                  <span>{prj.team_need || '1'} collaborator{prj.team_need === 1 ? '' : 's'}</span>
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function ProjectCard({ prj }) {
               <div className='flex items-center justify-between border-t border-zinc-100 pt-6'>
                 <Link
                   href={`/projects/${prj.id}`}
-                  className='group/btn inline-flex items-center gap-2 rounded-2xl bg-zinc-950 px-6 py-3 text-sm font-black text-white transition-all hover:bg-zinc-800 hover:shadow-lg active:scale-95'
+                  className='group/btn inline-flex items-center gap-2 rounded-2xl !bg-zinc-950 px-6 py-3 text-sm font-black !text-white transition-all hover:!bg-zinc-800 hover:shadow-lg active:scale-95'
                 >
                   View Details
                   <ArrowUpRight className='h-4 w-4 transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5' />

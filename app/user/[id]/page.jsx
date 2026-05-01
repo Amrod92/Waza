@@ -192,7 +192,7 @@ export default function UserProfilePage() {
               <div className='space-y-8'>
                 <div className='space-y-5'>
                   <p className='inline-flex rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.28em] text-zinc-500'>
-                      Co-founder profile
+                      Public profile
                   </p>
                   <div className='space-y-4'>
                     <h1 className='max-w-4xl text-5xl font-black leading-[0.92] tracking-[-0.06em] text-zinc-950 md:text-7xl'>
@@ -290,12 +290,12 @@ export default function UserProfilePage() {
                   <div className='space-y-3'>
                     <Link href='/projects'>
                       <Button className='w-full rounded-full bg-white text-zinc-950 hover:bg-zinc-200'>
-                      Explore startup projects
+                      Explore projects
                       </Button>
                     </Link>
                     <p className='text-xs leading-relaxed text-white/50'>
                       Better profiles reduce ambiguity before the first
-                      co-founder conversation starts.
+                      working conversation starts.
                     </p>
                   </div>
                 </div>
@@ -337,7 +337,7 @@ export default function UserProfilePage() {
               <DetailSection
                 eyebrow='Strengths'
                 title='Skills'
-                      description='Capabilities this person wants potential co-founders to understand quickly.'
+                      description='Capabilities this person wants potential collaborators to understand quickly.'
                 className='border-b border-zinc-200'
               >
                 <PillList items={data.skills} emptyLabel='No skills shared yet.' />

@@ -4,32 +4,32 @@ import { Card, CardContent } from '../UI/card';
 const features = [
   {
     title: 'Project discovery',
-    description: 'Filter startup opportunities by stage, commitment, strengths, and market instead of guessing what is worth joining.',
+    description: 'Filter opportunities by stage, commitment, strengths, and theme instead of guessing what is worth joining.',
     icon: Compass,
   },
   {
-    title: 'Clear startup briefs',
-    description: 'Project listings show what is being built, why it matters, and which kind of co-founder is still missing.',
+    title: 'Clear project briefs',
+    description: 'Project listings show what is being built, why it matters, and what kind of person is still missing.',
     icon: MessageSquareShare,
   },
   {
-    title: 'Founder workspaces',
+    title: 'Personal workspaces',
     description: 'Each user can manage their public profile, project briefs, and outreach-ready signals in one place.',
     icon: GitBranch,
   },
   {
     title: 'Profiles with signal',
-    description: 'Background, strengths, interests, and proof of work help people decide whether they trust the co-founder fit.',
+    description: 'Background, strengths, interests, and proof of work help people decide whether they trust the fit.',
     icon: Users,
   },
   {
-    title: 'Made for founder matching',
-    description: 'The product is designed around conviction, founder fit, and role gaps rather than generic networking.',
+    title: 'Made for useful matching',
+    description: 'The product is designed around intent, credibility, and role gaps rather than generic networking.',
     icon: FlaskConical,
   },
   {
     title: 'Built for mixed teams',
-    description: 'Technical and non-technical founders can both show what they bring and what they need.',
+    description: 'Technical and non-technical people can both show what they bring and what they need.',
     icon: PenTool,
   },
 ];
@@ -40,12 +40,12 @@ function FeaturesBlocks() {
       <div className='flex flex-col lg:flex-row items-baseline justify-between gap-12 mb-20'>
         <div className='max-w-xl space-y-6'>
           <h2 className='text-5xl font-black tracking-tight leading-tight'>
-            Everything needed to make co-founder discovery legible.
+            Everything needed to make collaboration legible.
           </h2>
         </div>
         <p className='max-w-lg text-xl text-muted-foreground leading-relaxed'>
-          Waza gives founders enough structure to describe a startup, show
-          credibility, and find the right person to build it with.
+          Waza gives people enough structure to describe a project, show
+          credibility, and find the right person to work with.
         </p>
       </div>
 

@@ -10,7 +10,7 @@ export default async function main(req, res) {
     const session = await getBetterAuthSession(req, { syncAppUser: true });
 
     if (!session?.user?.email) {
-      return res.status(401).json({ error: 'Sign in to connect with co-founders.' });
+      return res.status(401).json({ error: 'Sign in to connect with collaborators.' });
     }
 
     const result = await createConnectionBetweenUsers(

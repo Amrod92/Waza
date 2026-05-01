@@ -90,15 +90,15 @@ export default function ProjectsPage() {
           <header className='space-y-8'>
             <div className='space-y-6'>
               <Badge variant='outline' className='rounded-full border-zinc-200 bg-white/50 px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-zinc-500 backdrop-blur-sm'>
-                Startup Opportunity Feed
+                Project Opportunity Feed
               </Badge>
               <div className='space-y-4'>
                 <h1 className='text-balance text-5xl font-black tracking-[-0.06em] text-zinc-950 md:text-7xl lg:text-8xl'>
                   Build something <span className='text-zinc-400'>that matters.</span>
                 </h1>
                 <p className='max-w-2xl text-lg leading-relaxed text-zinc-600 md:text-xl'>
-                  Discover projects looking for early partners. 
-                  Filter by venture stage, commitment level, and co-founder strengths.
+                  Discover projects looking for the right people. Filter by
+                  stage, commitment level, themes, and strengths needed.
                 </p>
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function ProjectsPage() {
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     className='h-14 w-full rounded-2xl border-transparent bg-zinc-100/50 pl-12 pr-4 text-base font-medium ring-offset-0 placeholder:text-zinc-400 focus-visible:bg-white focus-visible:ring-1 focus-visible:ring-zinc-200'
-                    placeholder='Search projects, markets, or founder roles...'
+                    placeholder='Search projects, themes, or roles...'
                   />
                   {search.length > 0 && (
                     <p className='absolute -bottom-6 left-4 text-[10px] font-bold text-zinc-400 uppercase tracking-wider animate-in fade-in slide-in-from-top-1'>
@@ -146,7 +146,9 @@ export default function ProjectsPage() {
                       size='sm'
                       onClick={() => handleSortingChange('createdAt')}
                       className={`h-10 rounded-xl px-4 text-xs font-bold transition-all ${
-                        sortingColumn === 'createdAt' ? 'bg-zinc-950 text-white shadow-lg' : 'text-zinc-500 hover:bg-zinc-200'
+                        sortingColumn === 'createdAt'
+                          ? '!bg-zinc-950 !text-white hover:!bg-zinc-800 shadow-lg'
+                          : '!bg-transparent !text-zinc-500 hover:!bg-zinc-200 hover:!text-zinc-950'
                       }`}
                     >
                       Recent
@@ -159,7 +161,9 @@ export default function ProjectsPage() {
                       size='sm'
                       onClick={() => handleSortingChange('title')}
                       className={`h-10 rounded-xl px-4 text-xs font-bold transition-all ${
-                        sortingColumn === 'title' ? 'bg-zinc-950 text-white shadow-lg' : 'text-zinc-500 hover:bg-zinc-200'
+                        sortingColumn === 'title'
+                          ? '!bg-zinc-950 !text-white hover:!bg-zinc-800 shadow-lg'
+                          : '!bg-transparent !text-zinc-500 hover:!bg-zinc-200 hover:!text-zinc-950'
                       }`}
                     >
                       A-Z

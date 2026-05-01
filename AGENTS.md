@@ -2,19 +2,19 @@
 
 ## Purpose
 
-This repository is a startup co-founder discovery product inspired by products like YC Co-Founder Matching.
+This repository is a project matching product for people who want to find someone to work with.
 
 Current product intent:
 
-- One side publishes startup projects that need a co-founder.
-- The other side advertises individual co-founder profiles looking for the right startup.
+- One side publishes projects that need collaborators.
+- The other side advertises individual profiles looking for the right project.
 - Technical and non-technical users should both feel welcome.
-- The app should feel closer to founder matching than generic collaboration tooling.
+- The app should be agnostic: shops, startups, local ideas, personal projects, creative work, research, and similar projects are all valid.
 
 Important caveat:
 
-- The **product language** is startup / co-founder oriented.
-- The **physical schema** still uses legacy names like `Project`, `DevelopmentTool`, and `Communication`.
+- The **product language** should be project / collaborator oriented.
+- The **physical schema** still uses technical table names like `Project`, `DevelopmentTool`, and `Communication`.
 - Do not assume the database vocabulary matches the UI vocabulary.
 
 ## Stack
@@ -23,7 +23,7 @@ Important caveat:
 - React `19.2.5`
 - App Router for UI routes
 - Pages Router kept for API routes under `pages/api`
-- Better Auth with GitHub OAuth
+- Better Auth with Google OAuth
 - Supabase as the primary datastore
 - TanStack Query for client data fetching
 - Tailwind CSS v4
@@ -64,7 +64,7 @@ Main UI routes live under `app/`:
 - `/projects/[id]` -> `app/projects/[id]/page.jsx`
 - `/projects/create-project` -> `app/projects/create-project/page.jsx`
 - `/projects/update/[id]` -> `app/projects/update/[id]/page.jsx`
-- `/cofounders` -> `app/cofounders/page.jsx`
+- `/collaborators` -> `app/collaborators/page.jsx`
 - `/settings` -> `app/settings/page.jsx`
 - `/user/[id]` -> `app/user/[id]/page.jsx`
 
@@ -93,6 +93,11 @@ Key endpoints:
 - `pages/api/user/getUserInformation.js`
 - `pages/api/user/putUserSettings.js`
 
+Important product route note:
+
+- `app/projects/[id]/page.jsx` no longer uses Giscus / GitHub comments
+- project detail pages now use native product actions and guidance instead of public discussion threads
+
 ## Auth
 
 Shared auth files:
@@ -107,7 +112,7 @@ Better Auth route:
 
 Current auth behavior:
 
-- Better Auth handles GitHub OAuth and session management.
+- Better Auth handles Google OAuth plus session management.
 - Better Auth stores auth records in lowercase tables:
   - `user`
   - `session`
@@ -122,7 +127,7 @@ Current auth behavior:
 Client auth usage:
 
 - `betterAuthClient.useSession()` for client session state
-- `betterAuthClient.signIn.social({ provider: 'github', callbackURL })` for sign-in
+- `betterAuthClient.signIn.social({ provider: 'google', callbackURL })` for sign-in
 - `betterAuthClient.signOut()` for sign-out
 
 Important origin requirements:
@@ -136,10 +141,10 @@ Important origin requirements:
   - `http://127.0.0.1:3000`
   - `http://192.168.0.55:3000`
 
-GitHub OAuth callback URL must match the active origin:
+Google OAuth callback URL must match the active origin:
 
-- `http://localhost:3000/api/better-auth/callback/github`
-- or `http://192.168.0.55:3000/api/better-auth/callback/github`
+- `http://localhost:3000/api/better-auth/callback/google`
+- or `http://192.168.0.55:3000/api/better-auth/callback/google`
 
 App-level providers:
 
@@ -163,8 +168,8 @@ Expected local environment variables:
 - `BETTER_AUTH_URL`
 - `BETTER_AUTH_DATABASE_URL`
 - `NEXT_PUBLIC_APP_URL`
-- `GITHUB_ID`
-- `GITHUB_SECRET`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
 
 Important distinctions:
 
@@ -217,10 +222,10 @@ The UI direction is modern, high-contrast, and editorial:
 
 The app speaks in terms like:
 
-- co-founder profile
-- startup project
+- collaborator profile
+- project
 - project brief
-- venture stage
+- project stage
 - time commitment
 - strengths
 - industries and interests
@@ -230,14 +235,14 @@ The app speaks in terms like:
 
 Legacy fields still back the product:
 
-- `Project.title` -> startup or venture title
+- `Project.title` -> project title
 - `Project.description` -> project summary / why this matters
 - `Project.tags` -> markets / themes / sectors
-- `Project.skills` -> ideal co-founder strengths
+- `Project.skills` -> ideal collaborator strengths
 - `Project.technology_stack` -> helpful backgrounds / domains
-- `Project.development_status` -> venture stage
+- `Project.development_status` -> project stage
 - `Project.difficulty_level` -> time commitment
-- `Project.team_need` -> number of co-founders wanted
+- `Project.team_need` -> number of collaborators wanted
 
 Legacy related tables are also repurposed:
 
@@ -251,30 +256,36 @@ Do not rename these lightly without coordinating:
 - migration scripts
 - route UI
 
-## Two-Sided Marketplace Direction
+## Two-Sided Discovery Direction
 
 The current intended product split is:
 
-- `/projects` for startup projects looking for a co-founder
-- `/cofounders` for people advertising themselves as a co-founder
+- `/projects` for projects looking for collaborators
+- `/collaborators` for people advertising themselves as available to work on projects
+
+Current interaction model:
+
+- `Apply` on projects
+- `Connect` on people profiles
+- no GitHub-comment / Giscus discussion layer on project pages
 
 Important nuance:
 
-- Registration alone does **not** mean a user should appear on `/cofounders`.
+- Registration alone does **not** mean a user should appear on `/collaborators`.
 - A user may only want to publish projects.
-- Co-founder marketplace visibility is now explicit opt-in.
+- People discovery visibility is now explicit opt-in.
 
 Current behavior:
 
-- `User.show_in_cofounder_feed` controls whether a person appears on `/cofounders`
-- `User.availability` stores their declared marketplace availability
+- `User.show_in_collaborator_feed` controls whether a person appears on `/collaborators`
+- `User.availability` stores their declared discovery availability
 - Default is `false`
 - Settings page exposes this as a `Private` / `Public` visibility choice
 - Settings page also exposes availability values such as `exploring`, `part_time`, and `full_time`
 - `listUsers()` only returns users with:
-  - `show_in_cofounder_feed === true`
+  - `show_in_collaborator_feed === true`
   - and enough profile signal to be meaningful
-- Co-founder cards now enrich user data with:
+- Profile cards now enrich user data with:
   - `projectCount`
   - `connectionCount`
   - `signalRating`
@@ -282,36 +293,24 @@ Current behavior:
 
 Schema note:
 
-- `supabase/schema.sql` now includes `show_in_cofounder_feed boolean not null default false` on `User`
+- `supabase/schema.sql` now includes `show_in_collaborator_feed boolean not null default false` on `User`
 - `supabase/schema.sql` now includes `availability text not null default 'not_specified'` on `User`
 - `supabase/schema.sql` now includes a `Connection` table for user-to-user connections
 - Existing Supabase projects may need the manual SQL:
-  - `alter table public."User" add column if not exists show_in_cofounder_feed boolean not null default false;`
+  - `alter table public."User" add column if not exists show_in_collaborator_feed boolean not null default false;`
   - `alter table public."User" add column if not exists availability text not null default 'not_specified';`
   - create `public."Connection"` if the project predates connections
 
-## API Compatibility Layer
+## API Payloads
 
-The API is already tolerant of both:
-
-- old software-project payloads
-- newer founder-matching payload names
+Project API routes should use the current project/collaborator payload names only.
 
 Relevant files:
 
 - `pages/api/project/createProject.js`
 - `pages/api/project/update/putUserProject.js`
 
-Examples of compatibility mapping already in place:
-
-- `venture_name` or `title`
-- `concept_summary` or `description`
-- `cofounder_traits` or `skills`
-- `helpful_backgrounds` or `technology_stack`
-- `venture_stage` or `development_status`
-- `commitment_level` or `difficulty_level`
-
-If you continue a vocabulary migration, extend that compatibility layer before forcing a hard rename.
+Do not add old vocabulary aliases unless a migration requires it explicitly.
 
 ## Data Layer
 
@@ -342,7 +341,7 @@ Notes:
 - `User.name` is currently treated as a full-name field in the UI.
 - There is no separate surname / last-name column.
 - `User.hobbies` currently backs “passions, industries, and interests” in the UI.
-- `User.availability` stores marketplace availability, not project-level commitment.
+- `User.availability` stores people-discovery availability, not project-level commitment.
 
 ## Schema Status
 
@@ -392,13 +391,14 @@ Examples:
 
 These are still valid follow-up areas:
 
-1. The backend schema is still software-project-oriented under the hood.
+1. Some backend table names are still technical implementation names.
 2. Some API route names still reflect the older product model.
-3. Search/filtering is still listing-metadata-driven, not real compatibility matching.
+3. Search/filtering is still listing-metadata-driven, not real fit matching.
 4. App Router auth protection is still mostly client-side.
 5. The settings/profile flows still contain substantial repetitive form logic.
 6. Project applications are still lightweight CTA-driven, not a full in-app application system.
-7. Co-founder credibility is currently a computed signal score, not a true review or endorsement system.
+7. Profile credibility is currently a computed signal score, not a true review or endorsement system.
+8. `@giscus/react` may still remain in dependencies even though the project page discussion block has been removed.
 
 ## Files Worth Reading First
 
@@ -414,20 +414,20 @@ If you are picking up work, read these first:
 - `utils/supabase-db.js`
 - `app/page.jsx`
 - `app/projects/page.jsx`
-- `app/cofounders/page.jsx`
+- `app/collaborators/page.jsx`
 - `app/projects/[id]/page.jsx`
 - `app/projects/create-project/page.jsx`
 - `app/settings/page.jsx`
 - `app/user/[id]/page.jsx`
 - `components/NavbarUI/Navbar.jsx`
 - `components/ProjectsCard.jsx`
-- `components/CofounderCard.jsx`
+- `components/CollaboratorCard.jsx`
 
 ## Safety Notes
 
 - The worktree may already be dirty. Do not revert unrelated user changes.
 - Prefer incremental refactors over large schema renames unless you are explicitly completing the backend migration too.
-- If you add new founder-matching fields, decide whether they are:
+- If you add new matching fields, decide whether they are:
   - UI aliases mapped to existing columns, or
   - real storage fields requiring schema changes
 

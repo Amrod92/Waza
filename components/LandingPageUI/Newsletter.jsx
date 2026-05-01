@@ -12,20 +12,20 @@ import { SiGithub } from 'react-icons/si';
 import { Button } from '../UI/button';
 
 const signals = [
-  'For technical and non-technical co-founders',
-  'Clear startup briefs instead of vague profiles',
-  'Built for serious early-stage partnership discovery',
+  'For technical and non-technical collaborators',
+  'Clear project briefs instead of vague profiles',
+  'Built for serious working partnerships',
 ];
 
 const quickActions = [
   {
     label: 'Browse active projects',
-    description: 'See startup listings by stage, market, and co-founder fit.',
+    description: 'See project listings by stage, theme, and fit.',
     href: '/projects',
     icon: Search,
   },
   {
-    label: 'Publish your startup brief',
+    label: 'Publish your project brief',
     description: 'Show what you are building and who should join you.',
     href: '/projects/create-project',
     icon: UserPlus,
@@ -35,7 +35,7 @@ const quickActions = [
 function Newsletter() {
   return (
     <section className='container mx-auto px-4 py-32'>
-      <div className='relative overflow-hidden rounded-[56px] border border-border bg-zinc-950 px-6 py-8 text-primary-foreground shadow-3xl md:px-10 md:py-10 lg:px-14'>
+      <div className='relative overflow-hidden rounded-[56px] border border-border bg-zinc-950 px-6 py-8 text-white shadow-3xl md:px-10 md:py-10 lg:px-14'>
         <div className='absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_22%)] pointer-events-none' />
         <div className='absolute inset-0 bg-grid-zinc opacity-20 [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_100%)] pointer-events-none' />
         <div className='absolute -right-20 top-10 h-56 w-56 rounded-full bg-white/10 blur-3xl pointer-events-none' />
@@ -50,12 +50,12 @@ function Newsletter() {
               <h2 className='!text-white text-4xl font-black leading-[0.95] tracking-tight [text-shadow:0_2px_18px_rgba(0,0,0,0.35)] md:text-6xl lg:text-7xl'>
                 Stop searching blindly.
                 <br />
-                Start finding the right co-founder.
+                Start finding the right person.
               </h2>
               <p className='max-w-xl text-lg font-medium leading-relaxed text-white/75 md:text-xl'>
-                Waza helps you publish a clearer startup brief, discover the
-                right project or co-founder, and move toward the first real
-                founder conversation.
+                Waza helps you publish a clearer project brief, discover the
+                right person or project, and move toward the first real working
+                conversation.
               </p>
             </div>
 
@@ -130,7 +130,7 @@ function Newsletter() {
                 </Button>
               </a>
               <p className='md:col-span-2 text-sm leading-relaxed text-white/60'>
-                Prefer to look first? Explore current startup briefs, then
+                Prefer to look first? Explore current project briefs, then
                 publish your own when the fit feels real.
               </p>
             </div>

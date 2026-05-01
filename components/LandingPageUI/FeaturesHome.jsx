@@ -2,23 +2,23 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { ArrowRight, BriefcaseBusiness, Layers3, Users2, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, BriefcaseBusiness, Layers3, Users2, CheckCircle2, Zap } from 'lucide-react';
 
 import BuildingWebsite from '../../assets/building_websites.png';
 import Hire from '../../assets/hire.png';
 import PairProgramming from '../../assets/pair_programming.png';
 import { Button } from '../UI/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../UI/card';
+import { Card } from '../UI/card';
 
 const featureTabs = [
   {
     id: 1,
     eyebrow: 'Discover',
-    title: 'Find the right startup projects',
+    title: 'Find the right projects',
     description:
-      'Browse startup projects by market, stage, and co-founder fit so you can focus on opportunities that are actually worth a serious conversation.',
+      'Browse projects by theme, stage, and collaboration fit so you can focus on opportunities that are actually worth a serious conversation.',
     image: PairProgramming,
-    points: ['Advanced filtering by market and co-founder need', 'Transparent startup stage indicators', 'Direct insight into what the project still lacks'],
+    points: ['Advanced filtering by theme and role need', 'Transparent project stage indicators', 'Direct insight into what the project still lacks'],
     icon: Users2,
     color: 'bg-blue-500',
   },
@@ -27,9 +27,9 @@ const featureTabs = [
     eyebrow: 'Build',
     title: 'Craft your project brief',
     description:
-      'Waza gives you a clearer way to describe the startup, why it matters, and exactly what kind of co-founder would make it stronger.',
+      'Waza gives you a clearer way to describe the idea, why it matters, and exactly what kind of person would make it stronger.',
     image: BuildingWebsite,
-    points: ['Optimized posting flow for founder clarity', 'Signal your proof and seriousness', 'Credible, context-rich founder profiles'],
+    points: ['Optimized posting flow for clarity', 'Signal your proof and seriousness', 'Credible, context-rich people profiles'],
     icon: Layers3,
     color: 'bg-purple-500',
   },
@@ -38,9 +38,9 @@ const featureTabs = [
     eyebrow: 'Grow',
     title: 'Move to the right conversation',
     description:
-      'Manage your startup briefs and track interest from potential co-founders. The goal is to move from first look to the first serious conversation faster.',
+      'Manage your project briefs and track interest from potential collaborators. The goal is to move from first look to the first serious conversation faster.',
     image: Hire,
-    points: ['Dedicated project dashboards', 'Real-time interest signals', 'Streamlined path to founder conversation'],
+    points: ['Dedicated project dashboards', 'Real-time interest signals', 'Streamlined path to a working conversation'],
     icon: BriefcaseBusiness,
     color: 'bg-emerald-500',
   },
@@ -57,7 +57,7 @@ function Features() {
           <div className='space-y-6'>
             <div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider'>
               <Zap className='h-3 w-3' />
-              The Co-Founder Flow
+              The Collaboration Flow
             </div>
             <h2 className='text-5xl font-black tracking-tight leading-[1.1]'>
               One platform. <br />
@@ -65,7 +65,7 @@ function Features() {
             </h2>
             <p className='text-xl text-muted-foreground leading-relaxed max-w-xl'>
               Waza is designed around the three stages that matter most:
-              discovery, positioning, and founder conversation.
+              discovery, positioning, and working conversation.
             </p>
           </div>
 
@@ -142,7 +142,5 @@ function Features() {
     </section>
   );
 }
-
-import { Zap } from 'lucide-react';
 
 export default Features;

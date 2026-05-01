@@ -159,7 +159,7 @@ function CreateProjectContent() {
     { label: 'Project title', complete: Boolean(title.trim()) },
     { label: 'Why this matters', complete: Boolean(description.trim()) },
     { label: 'Markets and themes', complete: tagsValid },
-    { label: 'Ideal co-founder strengths', complete: skillsValid },
+    { label: 'Ideal collaborator strengths', complete: skillsValid },
     { label: 'Helpful backgrounds', complete: techStackValid },
     { label: 'Project stage', complete: Boolean(developmentStatus) },
     { label: 'Commitment level', complete: Boolean(difficultyLevel) },
@@ -212,11 +212,12 @@ function CreateProjectContent() {
               </Badge>
               <div className='space-y-4'>
                 <h1 className='text-balance text-5xl font-black tracking-[-0.06em] text-zinc-950 md:text-7xl lg:text-8xl'>
-                  Define your venture, <span className='text-zinc-400'>find your partner.</span>
+                  Define your project, <span className='text-zinc-400'>find your person.</span>
                 </h1>
                 <p className='max-w-2xl text-lg leading-relaxed text-zinc-600 md:text-xl'>
-                  A strong brief makes the co-founder gap obvious. Detail your vision, 
-                  the current stage, and the specific strengths you need.
+                  A strong brief makes the collaboration gap obvious. Detail
+                  what you are building, where it stands, and the specific
+                  strengths you need.
                 </p>
               </div>
             </div>
@@ -343,7 +344,7 @@ function CreateProjectContent() {
                         </Select>
                       </div>
                       <div className='rounded-[32px] border border-zinc-200 bg-zinc-50/50 p-6'>
-                        <label className='mb-3 block text-[10px] font-black uppercase tracking-widest text-zinc-400'>Partners Wanted</label>
+                        <label className='mb-3 block text-[10px] font-black uppercase tracking-widest text-zinc-400'>Collaborators Wanted</label>
                         <Input
                           type='number'
                           value={teamNeed}
@@ -397,7 +398,7 @@ function CreateProjectContent() {
                             {difficultyLevel || 'TBD'}
                           </div>
                         </div>
-                        <h3 className='text-xl font-black tracking-tight text-zinc-950 line-clamp-1'>{title || 'Untitled Venture'}</h3>
+                        <h3 className='text-xl font-black tracking-tight text-zinc-950 line-clamp-1'>{title || 'Untitled Project'}</h3>
                         <p className='text-xs leading-relaxed text-zinc-500 line-clamp-3 italic'>
                           {description || 'Your vision will appear here...'}
                         </p>

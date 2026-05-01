@@ -14,8 +14,8 @@ export default function Footer() {
               <span className='font-bold text-2xl tracking-tighter'>WAZA</span>
             </Link>
             <p className='max-w-xs text-muted-foreground text-sm leading-relaxed'>
-              A startup network for people looking for a co-founder or looking
-              for the right startup project to join.
+              A project network for people looking for someone to work with on
+              shops, startups, local ideas, creative work, and personal projects.
             </p>
           </div>
 
@@ -33,8 +33,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href='/cofounders' className='text-muted-foreground hover:text-foreground transition-colors'>
-                  Co-Founders
+                <Link href='/collaborators' className='text-muted-foreground hover:text-foreground transition-colors'>
+                  Collaborators
                 </Link>
               </li>
               <li>
@@ -80,7 +80,7 @@ export default function Footer() {
         <div className='mt-16 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground font-medium'>
           <p>Copyright © {currentYear()} WAZA. All rights reserved.</p>
           <div className='flex gap-6'>
-            <span>Designed for startup builders</span>
+            <span>Designed for people starting things</span>
             <span>Technical & non-technical welcome</span>
           </div>
         </div>

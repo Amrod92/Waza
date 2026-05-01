@@ -54,7 +54,7 @@ function getAvailabilityLabel(value) {
   }
 }
 
-export default function CofounderCard({ user }) {
+export default function CollaboratorCard({ user }) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: sessionData } = betterAuthClient.useSession();
@@ -91,7 +91,7 @@ export default function CofounderCard({ user }) {
       return payload;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cofounders'] });
+      queryClient.invalidateQueries({ queryKey: ['collaborators'] });
       queryClient.invalidateQueries({ queryKey: ['user-profile', user.id] });
     },
   });
@@ -133,7 +133,7 @@ export default function CofounderCard({ user }) {
                     {user.name || 'Unnamed profile'}
                   </Link>
                   <p className='text-sm font-medium leading-relaxed text-zinc-500'>
-                    {user.short_bio || 'Open to joining the right startup project.'}
+                    {user.short_bio || 'Open to joining the right project.'}
                   </p>
                 </div>
                 <div className='flex flex-wrap gap-2 pt-1'>
@@ -202,7 +202,7 @@ export default function CofounderCard({ user }) {
                   </p>
                   <div className='mt-3 flex items-center gap-2 text-sm font-medium text-zinc-800'>
                     <ShieldCheck className='h-4 w-4 text-zinc-500' />
-                    <span>{user.connectionCount || 0} founder connection{user.connectionCount === 1 ? '' : 's'}</span>
+                    <span>{user.connectionCount || 0} connection{user.connectionCount === 1 ? '' : 's'}</span>
                   </div>
                   <p className='mt-1 text-sm text-zinc-500'>
                     Connections strengthen social proof over time
@@ -224,7 +224,7 @@ export default function CofounderCard({ user }) {
                   <div className='mt-3 flex items-center gap-2 text-sm font-medium text-zinc-800'>
                     <Sparkles className='h-4 w-4 text-zinc-500' />
                     <span>
-                      {user.projectCount || 0} startup project{user.projectCount === 1 ? '' : 's'}
+                      {user.projectCount || 0} project{user.projectCount === 1 ? '' : 's'}
                     </span>
                   </div>
                 </div>
@@ -265,9 +265,9 @@ export default function CofounderCard({ user }) {
                 <div className='flex flex-wrap items-center gap-3'>
                   <Link
                     href={`/user/${user.id}`}
-                    className='group inline-flex items-center gap-2 rounded-2xl bg-zinc-950 px-6 py-3 text-sm font-black text-white transition-all hover:bg-zinc-800 hover:shadow-lg active:scale-95'
+                    className='group inline-flex items-center gap-2 rounded-2xl !bg-zinc-950 px-6 py-3 text-sm font-black !text-white transition-all hover:!bg-zinc-800 hover:shadow-lg active:scale-95'
                   >
-                    View Co-Founder Profile
+                    View Profile
                     <span className='transition-transform group-hover:translate-x-1'>→</span>
                   </Link>
                   <Button
